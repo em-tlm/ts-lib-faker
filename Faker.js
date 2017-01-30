@@ -7,27 +7,24 @@ class Faker extends EventEmitter{
         super();
         options = options || {};
         this.setStrategy(options.strategy);
-
     }
 
 
     setStrategy (strategy) {
-        console.log('h');
         if (strategy) {
             // todo: check strategy is valid
             this._strategy = strategy;
             this._strategy.on('new_data', (data) => {
-                this.emit('new_data', data)
-            })
-
+                this.emit('new_data', data);
+            });
+            this._strategy.on('start', (data) => {
+                this.emit('start', data);
+            });
         } else {
             throw new Error(`${strategy} is not a valid strategy`);
         }
     }
 
-/*    get _strategy (){
- return this._strategy;
- }*/
 
     // start generating time series data
     begin(){

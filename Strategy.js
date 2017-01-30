@@ -14,16 +14,16 @@ class Strategy extends EventEmitter {
         // by default data point has 5 sec interval
         // todo: are these checking necessary?
         if (_.isUndefined(options.interval)) {
-            options.interval = 5;
+            options.interval = 5000;
         }
         options.interval = parseFloat(options.interval);
         if (_.isNaN(options.interval)) {
             throw new Error('offset_count can not be parsed into an integer');
         }
-        if (options.interval < 0.1) {
-            throw new Error('interval can not be lower than 0.1 sec')
+        if (options.interval < 100) {
+            throw new Error('interval can not be lower than 0.1 sec（100 msec)');
         }
-        this.interval = options.interval * 1000;
+        this.interval = options.interval;
 
         // fast forward this many counts
         options.offset_count = parseInt(options.offset_count);
@@ -34,6 +34,7 @@ class Strategy extends EventEmitter {
             throw new Error('offset_count must be a positive integer');
         }
         this.offset_count = options.offset_count || 0;
+        this.offset_time = options.offset_time || this.offset_count * this.interval || 0;
         this.counter = 0 + this.offset_count;
     }
 
@@ -50,7 +51,7 @@ class Strategy extends EventEmitter {
                 };
                 self.emit('new_data', datapoint)
             }, self.interval)
-        }, self.offset_count * self.interval);
+        }, self.offset_time);
     }
 
     end() {
@@ -71,6 +72,8 @@ class Strategy extends EventEmitter {
         // todo: start the time series data all over again
         this.counter = 0;
     }
+
+    //todo: do we need to define generateValue here?
 }
 
 module.exports = Strategy;
