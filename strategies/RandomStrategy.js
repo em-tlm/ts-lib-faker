@@ -12,26 +12,43 @@ class RandomStrategy extends Strategy {
         const UNIFORM = 'uniform';
         options = options || {};
         super(options);
-        this.distribution = (options.distribution && options.distribution.toLowerCase()) || {type: UNIFORM,max:1,min:0}
+        if (options.distribution && options.distribution.type) {
+            this.distribution = options.distribution;
+        } else {
+            this.distribution = {type: UNIFORM,max:1,min:0};
+        }
     }
 
 
 
-    getRawData(start,stop){
-        let interval = this.interval*1000;
+    getRawData(faker,start,stop){
+        let interval = faker.interval;
 
-        let value = generateValue();
-        let pts = (stop-start)/interval;
+        let now = new Date().getTime();
+        let dataAry = [], pts;
+
+        if ( now > start && now < stop ){
+            pts = Math.round(now-start)/interval;
+        } else {
+            pts = Math.round(stop-start)/interval;
+        }
         let startCount = Math.ceil(start/interval);
-        let dataAry = [];
         for (let i=0; i<pts; i++){
             let timestamp = (startCount+i) * interval;
             dataAry.push({
                 timestamp : timestamp,
-                value: value
+                value: generateValue()
             })
         }
-        return Promise.resolve(dataAry);
+
+        return dataAry;
+    }
+
+    generateDataPoint(faker){
+        return {
+            timestamp: faker.counter * faker.interval + faker.offset_time,
+            value: this.generateValue()
+        }
     }
 
     generateValue(){

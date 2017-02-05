@@ -19,3 +19,7 @@ faker.on(`new_data`,function(datapoint){
     console.log(datapoint)
 })；
 ```
+
+## Todo
+* remove the concept of offset, since it's not needed. 
+* add unit test for the strategies.
