@@ -27,7 +27,7 @@ class Faker extends EventEmitter {
         }
         this.interval = options.interval;
 
-        // fast forward this many counts
+        // fast forward this many counts, currently not used and not tested
         options.offset_count = parseInt(options.offset_count);
         if (_.isNaN(this.offset)) {
 
@@ -37,6 +37,7 @@ class Faker extends EventEmitter {
         }
         this.offset_count = options.offset_count || 0;
         this.offset_time = options.offset_time || this.offset_count * this.interval || 0;
+
         this.counter = 0 + this.offset_count;
 
 
@@ -55,6 +56,7 @@ class Faker extends EventEmitter {
     getMostRecentDataPoint(){
         return this.mostRecentDataPoint;
     }
+
     // start generating time series data
     begin() {
         // kick off the time series data
@@ -69,19 +71,55 @@ class Faker extends EventEmitter {
                 self.emit('new_data', datapoint)
             }, self.interval)
         }, self.offset_time);
+        self.t0 = new Date().getTime();
     }
 
     // generate a data point based on strategy
     _generateDataPoint() {
-        let datapoint = this._strategy.generateDataPoint(this.counter, this.interval, this.offset_time);
-        datapoint.timestamp = new Date().getTime();
+        let datapoint = this._strategy.generateDataPoint(this);
         return datapoint;
     }
 
 
     getData(start, stop) {
+        let now = new Date().getTime();
+        if (!_.isNumber(start) || !_.isNumber(stop)){
+            throw new Error("getData(start,stop) must take numbers as arguments");
+        }
+        if (stop < start){
+            throw new Error("stop can not be an earlier time than start");
+        }
+
+        // no data before the faker was began
+        if (stop < this.t0) {
+            return [];
+        }
+        // no data for the future
+        if (start > now) {
+            return [];
+        }
+
+        if (start <= t0) {
+            start = this.t0;
+        }
+
+        if (stop >= now) {
+            stop = now;
+        }
+
         // todo: add caching
-        return this._strategy.getRawData(this, start-this.offset_time, stop-this.offset_time);
+        // todo: ignore the paused time
+
+        let startCount = Math.ceil( (start - this.t0) / this.interval );
+        let stopCount = Math.floor( (stop- this.t0) / this.interval );
+        let valueAry = this._strategy.getValueAry(this, startCount, stopCount);
+        let dataAry = valueAry.map(function(dp){
+            return {
+                timestamp: dp.count * this.interval + this.t0,
+                value: dp.value
+            }
+        });
+        return dataAry;
     }
 
 

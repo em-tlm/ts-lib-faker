@@ -21,32 +21,23 @@ class RandomStrategy extends Strategy {
 
 
 
-    getRawData(faker,start,stop){
-        let interval = faker.interval;
+    getValueAry(faker,startCount,stopCount){
 
-        let now = new Date().getTime();
-        let dataAry = [], pts;
+        let valueAry = [];
 
-        if ( now > start && now < stop ){
-            pts = Math.round(now-start)/interval;
-        } else {
-            pts = Math.round(stop-start)/interval;
-        }
-        let startCount = Math.ceil(start/interval);
-        for (let i=0; i<pts; i++){
-            let timestamp = (startCount+i) * interval;
-            dataAry.push({
-                timestamp : timestamp,
-                value: generateValue()
+        for (let i = startCount; i <= stopCount; i++){
+            valueAry.push({
+                count : i,
+                value: this.generateValue()
             })
         }
 
-        return dataAry;
+        return valueAry;
     }
 
     generateDataPoint(faker){
         return {
-            timestamp: faker.counter * faker.interval + faker.offset_time,
+            timestamp: faker.counter * faker.interval,
             value: this.generateValue()
         }
     }
