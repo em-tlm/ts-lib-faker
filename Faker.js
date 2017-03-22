@@ -130,8 +130,10 @@ class Faker extends EventEmitter {
         // todo: ignore the paused time
 
         let startCount = Math.ceil( (start - this.t0) / this.interval );
-        let stopCount = Math.floor( (stop- this.t0) / this.interval );
-        if (startCount >= stopCount) {
+        let stopCount = Math.floor( (stop - this.t0) / this.interval );
+
+        // this can happen when start and stop are both within the same interval, namely between two counts
+        if (startCount > stopCount) {
             return [];
         }
         let valueAry = this._strategy.getValueAry(this, startCount, stopCount);
