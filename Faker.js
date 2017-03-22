@@ -133,6 +133,7 @@ class Faker extends EventEmitter {
         let stopCount = Math.floor( (stop - this.t0) / this.interval );
 
         // this can happen when start and stop are both within the same interval, namely between two counts
+        // when startConut === stopCount, should still proceed, since there will be one data point
         if (startCount > stopCount) {
             return [];
         }
