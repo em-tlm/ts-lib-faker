@@ -37,6 +37,8 @@ class SquareWaveStrategy extends Strategy {
         this.low_value = options.low_value || 0;
 
         this.high_value = options.high_value || this.low_value * 2;
+
+        this.variation = options.variation || (this.high_value - this.low_value) * 0.05;
     }
 
     /**
@@ -57,6 +59,9 @@ class SquareWaveStrategy extends Strategy {
 
             value = this.low_value
         }
+
+        value += this.variation * Math.random() - 0.5 * this.variation;
+
         return value;
     }
 

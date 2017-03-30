@@ -13,7 +13,8 @@ describe('RandomStrategy', function () {
         period_count: 60,
         duty_cycle: 0.3,
         high_value: 20,
-        low_value: 5
+        low_value: 5,
+        variation: 1
     });
 
     let faker = {
@@ -26,7 +27,9 @@ describe('RandomStrategy', function () {
     it('should generate value that is in the range', function (done) {
 
         let valuePoint = squareWave.generateValue(faker);
+        // based on faker.counter, this should be high value
         expect(valuePoint.value).to.be.above(squareWave.low_value);
+        expect(valuePoint.value).to.not.equal(squareWave.high_value);
         done();
     });
 

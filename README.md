@@ -31,9 +31,10 @@ It supports the following distributions
 let SquareWaveStrategy = require('../../strategies/SquareWaveStrategy.js');
 let squareWave = new SquareWaveStrategy({
     period_count: 60*1000 / 5000, // period is 1 min
-    duty_cycle: 0.3,             // percent of time the value is at high_value
-    high_value: 20,             
-    low_value: 5
+    duty_cycle: 0.3,              // percent of time the value is at high_value
+    high_value: 20,               // high value of the square wave
+    low_value: 5,                 // low value of the square wave
+    variation: 1                  // introduce a little noise to the square wave
 });
 ```
 
