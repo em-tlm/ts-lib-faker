@@ -8,7 +8,7 @@ const _ = require('lodash');
 const Strategy = require('../Strategy.js');
 
 
-class FixedValueStategy extends Strategy {
+class FixedValueStrategy extends Strategy {
     /**
      * Constructor for this strategy. The options object should contain
      * - values, The values this will cycle between.

@@ -8,13 +8,13 @@ const sec = 1000;
 const min = 60 * sec;
 
 const Faker = require('../../Faker.js');
-const FixedValueStategy = require('../../strategies/FixedValueStrategy.js');
+const FixedValueStrategy = require('../../strategies/FixedValueStrategy.js');
 
 const API_KEY = '';
 const URL = '';
 
 
-const strategy = new FixedValueStategy({
+const strategy = new FixedValueStrategy({
     values: [2, 1, 0],
     cycle_type: 'sequential',
     period_cycle: (15 * 60) / 5, // change every 15min at 5/s a tick.
@@ -39,7 +39,7 @@ faker.on('new_data',(data) => {
         .end((err, res) => {
             if(err) console.error(err);
             if(res) console.log(res.body);
-    });
+        });
 });
 
 faker.begin();
