@@ -69,11 +69,9 @@ class FixedValueStrategy extends Strategy {
         let valueAry = [];
 
         for (let i = startCount; i <= stopCount; i++){
-            let count = i;
-
             valueAry.push({
-                count: count,
-                value: this._generateValue(count)
+                count: i,
+                value: this._generateValue(i)
             });
         }
 
