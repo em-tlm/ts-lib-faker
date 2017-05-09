@@ -28,10 +28,11 @@ const faker = new Faker({
 
 const postData = {
     api_key: API_KEY,
-    data: []
+    data: {}
 };
 
 faker.on('new_data',(data) => {
+    postData.data = {'key': 'value'}
     console.log(postData);
     superagent.post(URL)
         .send(postData)
