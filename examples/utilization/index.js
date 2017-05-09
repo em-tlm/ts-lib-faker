@@ -33,7 +33,6 @@ const postData = {
 
 faker.on('new_data',(data) => {
     postData.data = {'key': 'value'}
-    console.log(postData);
     superagent.post(URL)
         .send(postData)
         .set('Accept', 'application/json')
