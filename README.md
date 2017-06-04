@@ -126,5 +126,6 @@ The value can be string or buffer, such as `new Buffer("humdity:60%")`.
 ```
 
 ## Todo 
+* add support for 1111000022222
 * add unit test for the strategies.
 * support type buffer
