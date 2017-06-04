@@ -7,9 +7,20 @@ let Faker = require('../Faker.js');
 
 describe('faker', function () {
 
+    const interval = 200;
+    let count = 0;
+    const dummyStrategy = {
+        generateValue: () =>{
+            return {
+                count: ++count,
+                value: 1
+            }
+        }
+    };
+
     let faker = new Faker({
-        interval: 200,
-        strategy: {}
+        interval: interval,
+        strategy: dummyStrategy
     });
 
     describe('faker.begin', function () {
@@ -18,17 +29,21 @@ describe('faker', function () {
         });
 
         it('should be able to end after begin', function (done) {
-            faker._generateDataPoint = ()=> {
-                throw new Error('faker not stopped properly')
-            };
             faker.begin();
-            setTimeout(done, 120);
-            faker.end();
+
+            setTimeout(()=>{
+                expect(faker.getCounter()).to.equal(1);
+                done();
+            }, interval * 1.5);
+
+            setTimeout(()=>{
+                faker.end()
+            }, interval * 0.5);
         });
 
         it('should be able to generate data periodically', function (done) {
             let count = 0;
-            faker._generateDataPoint = function () {
+            faker.generateDataPoint = function () {
                 count++;
             };
             faker.begin();
@@ -39,8 +54,8 @@ describe('faker', function () {
         });
 
         it("should not be able to get data for the future", function(done){
-            faker._generateDataPoint = ()=>{};
-            faker._strategy.getValueAry = ()=>{ throw new Error("this is future!")}
+            faker.generateDataPoint = ()=>{};
+            faker._strategy.getValueAry = ()=>{ throw new Error("this is future!")};
             faker.begin();
             let now = new Date().getTime();
             faker.getData(now+10*1000, now+15*1000);

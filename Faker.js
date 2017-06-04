@@ -10,9 +10,7 @@ class Faker extends EventEmitter {
 
         this.setStrategy(options.strategy);
 
-        // the start time of the time series feed
-        this.t0 = options.t0 || new Date().getTime();
-
+        // interval determines the periodicity of the time series data
         // by default data point has 5 sec interval
         if (_.isUndefined(options.interval)) {
             options.interval = 5000;
@@ -21,27 +19,15 @@ class Faker extends EventEmitter {
         options.interval = parseInt(options.interval);
 
         if (_.isNaN(options.interval)) {
-            throw new Error('offset_count can not be parsed into an integer');
+            throw new Error('interval can not be parsed into an integer');
         }
-        if (options.interval < 200) {
-            throw new Error('interval can not be lower than 200 ms');
+        if (options.interval < 0) {
+            throw new Error('interval can not be negative');
         }
-        this.interval = options.interval;
+        this._interval = options.interval;
 
-        // fast forward this many counts, currently NOT used and NOT tested
-        options.offset_count = parseInt(options.offset_count);
-        if (_.isNaN(this.offset)) {
-
-        }
-        if (options.offset_count < 0) {
-            throw new Error('offset_count must be a positive integer');
-        }
-        this.offset_count = options.offset_count || 0;
-        this.offset_time = options.offset_time || this.offset_count * this.interval || 0;
-
-        this.counter = 0 + this.offset_count;
-
-
+        // counter keeps track how many data points have been generated
+        this._counter = 0;
     }
 
 
@@ -55,50 +41,37 @@ class Faker extends EventEmitter {
     }
 
     getMostRecentDataPoint(){
-        return this.mostRecentDataPoint;
+        return this._mostRecentDataPoint;
     }
 
-    // start generating time series data
+    getCounter(){
+        return this._counter;
+    }
+
+    getInterval(){
+        return this._interval;
+    }
+
+    // begin generating time series data
     begin() {
-        // kick off the time series data
-        // first wait for the offset
-        // then generate data periodically
-        let self = this;
-        self.timer1 = setTimeout(()=> {
-
-            self.timer2 = setInterval(()=> {
-
-                self._fake();
-
-            }, self.interval, true);
-
-            self._fake();
-
-        }, self.offset_time);
-        self.t0 = new Date().getTime();
+        this.t0 = new Date().getTime(); // begin time
+        this.timer2 = setInterval(()=> {
+            this._fake();
+        }, this._interval, true);
+        this._fake();
     }
 
     // generate a data point based on strategy
-    _generateDataPoint() {
+    generateDataPoint() {
         let valuePoint = this._strategy.generateValue(this);
         let dataPoint = {
-            timestamp: valuePoint.count * this.interval + this.t0,
+            timestamp: valuePoint.count * this._interval + this.t0,
             value: valuePoint.value
         };
         return dataPoint;
     }
 
-    _fake() {
-        let self = this;
-        let datapoint = self._generateDataPoint();
-        self.mostRecentDataPoint = datapoint;
-        self.counter++;
-        self.emit('new_data', datapoint);
-    }
-
-
     getData(start, stop) {
-        let self = this;
         let now = new Date().getTime();
         if (!_.isNumber(start) || !_.isNumber(stop)){
             throw new Error("getData(start,stop) must take numbers as arguments");
@@ -129,8 +102,8 @@ class Faker extends EventEmitter {
         // todo: add caching
         // todo: ignore the paused time
 
-        let startCount = Math.ceil( (start - this.t0) / this.interval );
-        let stopCount = Math.floor( (stop - this.t0) / this.interval );
+        let startCount = Math.ceil( (start - this.t0) / this._interval );
+        let stopCount = Math.floor( (stop - this.t0) / this._interval );
 
         // this can happen when start and stop are both within the same interval, namely between two counts
         // when startConut === stopCount, should still proceed, since there will be one data point
@@ -139,9 +112,9 @@ class Faker extends EventEmitter {
         }
         let valueAry = this._strategy.getValueAry(this, startCount, stopCount);
 
-        let dataAry = valueAry.map(function(dp){
+        let dataAry = valueAry.map((dp)=> {
             return {
-                timestamp: dp.count * self.interval + self.t0,
+                timestamp: dp.count * this._interval + this.t0,
                 value: dp.value
             }
         });
@@ -158,10 +131,15 @@ class Faker extends EventEmitter {
         }
     }
 
-    pause() {
-        // todo: how to pause a setInterval?
-    }
+    //todo: add a pause method
 
+    // private methods from this point on
+    _fake() {
+        const datapoint = this.generateDataPoint();
+        this._mostRecentDataPoint = datapoint;
+        this._counter++;
+        this.emit('new_data', datapoint);
+    }
 
 }
 

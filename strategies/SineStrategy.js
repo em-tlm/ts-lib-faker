@@ -22,7 +22,7 @@ class SineStrategy extends Strategy {
     generateValue(faker) {
         return {
             count: faker.counter,
-            value: this._generateValue(faker.counter, faker.interval)
+            value: this._generateValue(faker.getCounter(), faker.getInterval())
         }
     }
 
