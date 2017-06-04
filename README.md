@@ -2,7 +2,7 @@
 
 Create a time series data stream. Here are the highlights:
  
-* support comprehensive strategies for [random](#random), sinusoidal, square wave, file
+* support comprehensive strategies for [random](#random), [sinusoidal](#sine), square wave, file
 * support user defined strategies 
 
 ## Usage
