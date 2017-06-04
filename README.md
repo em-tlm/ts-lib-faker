@@ -2,20 +2,62 @@
 
 Create a time series data stream. Here are the highlights:
  
-* support comprehensive strategies for [random](#radnom), sinusoidal, square wave, file
+* support comprehensive strategies for [random](#random), sinusoidal, square wave, file
 * support user defined strategies 
 
+## Usage
+```bash
+npm install tetrascience/ts-faker
+```
+
+Here is a one simple example
+```javascript
+const min = 60*1000;
+
+const Faker = require('ts-faker');
+const SineStrategy = Faker.strategies.Sine;
+
+const sine = new SineStrategy({
+    period_count: 10,
+    amplitude: 1000,
+    phase_shift: Math.PI
+});
+const faker = new Faker({
+    strategy:sine,
+    interval: 5000
+});
+faker.begin();
+setTimeout(faker.end, 2 * min);
+
+const now = new Date().getTime();
+const oneMinAgo = now - 1 * min;
+
+faker.getData(oneMinAgo, now); 
+// return [], since faker was not began during that time range
+
+setTimeout(faker.getData.bind(faker,oneMinAgo, now), 1 * min);
+// return [dp1, dp2, ....] 
+
+faker.on("new_data",function(datapoint){
+    console.log(datapoint)
+});
+```
+
+More examples can be found in the [examples](/examples) folder
+
 ## Faker
-Every faker has one simple job -- keeps ticking based on user specified interval of the time series data. 
-Every time faker ticks, it leverages the [strategy](#strategies) to get a [data point](#data-point) 
+Every faker has one simple job -- keeps ticking based on user specified interval. 
+Every time faker ticks, it leverages the [strategy](#strategies) to generate a [data point](#data-point) 
 and its counter gets incremented. 
 
 ### `new Faker(options)`
-The constructor takes the following options 
+The constructor takes the following options to create a faker. 
 * `interval`: the interval between data points, in ms. For example 1000. Default is 5000.
 * `strategy`: the strategy object that generate the fake data at each tick of the faker. 
+You can pick from the [ones support natively](#Strategies).
 
 ### `getData(startTime, stopTime)`
+Retrieve the data within a certain time range.
 * Output: an array of [data points](#data-point) in the time range. 
 
 ### `Event: "new_data"`
@@ -59,45 +101,12 @@ let squareWave = new SquareWaveStrategy({
 
 #### `Sine`
 #### `File`
+#### `Fixed values`
 
 ### Contribute your strategy
 You can just put new strategies in the `strategies` folder. 
 
-## Examples
 
-Here is a one simple example
-```
-const min = 60*1000;
-
-let Faker = require('../../Faker.js');
-let sine = new SineStrategy({
-    period_count: 10,
-    amplitude: 1000,
-    phase_shift: Math.PI
-});
-let faker = new Faker({
-    strategy:sine,
-    interval: 5000
-});
-faker.begin();
-setTimeout(faker.end, 2 * min);
-
-let now = new Date().getTime();
-let 1minAgo = now - 1 * min;
-
-faker.getData(1minAgo, now); 
-// return [], since faker was not began during that time range
-
-setTimeout(faker.getData.bind(faker,1minAgo, now), 1*min);
-// return [dp1, dp2, ....] 
-
-faker.on("new_data",function(datapoint){
-    console.log(datapoint)
-})；
-
-```
-
-More examples can be found in the ts-faker/examples folder
 
 ## Basic concepts
 
