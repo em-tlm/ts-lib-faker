@@ -14,16 +14,15 @@ describe('FileStrategy', function () {
     });
 
     let faker = {
-        t0: new Date().getTime(),
-        counter: 1,
-        interval: 5000
+        getCounter: ()=>{ return 1;},
+        getInterval: ()=>{ return 5000;}
     };
 
 
     it("should be able to generate datapoint", function (done) {
-        let datapoint = fileStrategy.generateDataPoint(faker);
+        let datapoint = fileStrategy.generateValuePoint(faker);
         expect(datapoint.value).to.equal("SERIAL NUMBER: 000000<CR><LF>");
-        expect(datapoint).to.have.property("timestamp");
+        expect(datapoint).to.have.property("count");
         done();
     });
 

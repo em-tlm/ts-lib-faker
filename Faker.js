@@ -8,6 +8,7 @@ class Faker extends EventEmitter {
         super();
         options = options || {};
 
+        // set strategy
         this.setStrategy(options.strategy);
 
         // interval determines the periodicity of the time series data
@@ -52,10 +53,14 @@ class Faker extends EventEmitter {
         return this._interval;
     }
 
+    getT0(){
+        return this.t0;
+    }
+
     // begin generating time series data
     begin() {
         this.t0 = new Date().getTime(); // begin time
-        this.timer2 = setInterval(()=> {
+        this.timer = setInterval(()=> {
             this._fake();
         }, this._interval, true);
         this._fake();
@@ -112,7 +117,7 @@ class Faker extends EventEmitter {
         }
         let valueAry = this._strategy.getValueAry(this, startCount, stopCount);
 
-        let dataAry = valueAry.map((dp)=> {
+        let dataAry = valueAry.map((dp) => {
             return {
                 timestamp: dp.count * this._interval + this.t0,
                 value: dp.value
@@ -123,11 +128,8 @@ class Faker extends EventEmitter {
 
 
     end() {
-        if (this.timer1) {
-            clearTimeout(this.timer1);
-        }
-        if (this.timer2) {
-            clearInterval(this.timer2);
+        if (this.timer) {
+            clearInterval(this.timer);
         }
     }
 

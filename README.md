@@ -65,6 +65,8 @@ The `new_data` event will be emitted with a [data point](#data-point) whenever t
 new data point generated.  
 
 ## Strategies
+Strategy does not have the concept of time. It's only aware of counts (the number of ticks that the faker has experienced).
+
 ### Strategy API
 Each strategy must support the following APIs.
 

@@ -18,11 +18,10 @@ describe('RandomStrategy', function () {
     });
 
     let faker = {
-        counter: 10,
-        interval: 5000,
-        t0: new Date().getTime() - this.counter * this.interval
+        getCounter(){
+            return 10;
+        }
     };
-
 
     it('should generate value that is in the range', function (done) {
 

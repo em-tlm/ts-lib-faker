@@ -95,7 +95,7 @@ class SquareWaveStrategy extends Strategy {
      * @returns {object} A value point object, i.e, {count: number, value: number}
      */
     generateValue(faker){
-        let count = faker.counter;
+        let count = faker.getCounter();
         return {
             count: count,
             value: this._generateValue(count)

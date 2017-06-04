@@ -54,13 +54,14 @@ class FileStrategy extends Strategy {
         return valueAry;
     }
 
-    generateDataPoint(faker) {
-        let counter = this.loop ? (faker.counter % this.valueAry.length) : faker.counter;
-        let datapoint = {
-            timestamp: faker.t0 + counter * faker.interval,
+    generateValuePoint(faker) {
+        const fakerCounter = faker.getCounter();
+        let counter = this.loop ? (fakerCounter % this.valueAry.length) : fakerCounter;
+        let dataPoint = {
+            count: fakerCounter,
             value: this.valueAry[counter].value
         };
-        return datapoint;
+        return dataPoint;
     }
 }
 

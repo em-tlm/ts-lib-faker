@@ -10,7 +10,7 @@ describe('faker', function () {
     const interval = 200;
     let count = 0;
     const dummyStrategy = {
-        generateValue: () =>{
+        generateValue(){
             return {
                 count: ++count,
                 value: 1
@@ -63,7 +63,7 @@ describe('faker', function () {
         });
 
         it("should not be able to get data before the faker began",function(done){
-            faker._strategy.getValueAry = ()=>{ throw new Error("this is even before the faker began!")}
+            faker._strategy.getValueAry = ()=>{ throw new Error("this is even before the faker began!")};
             faker.begin();
             let now = new Date().getTime();
             faker.getData(now-10*1000, now-5*1000);
@@ -74,9 +74,9 @@ describe('faker', function () {
             faker._strategy.getValueAry = done;
             faker.begin();
             let now = new Date().getTime();
-            setTimeout(function(){
+            setTimeout(() => {
                 faker.getData(now + 100, now + 700);
-            },1*1000)
+            },1*1000);
             done();
         });
     });
