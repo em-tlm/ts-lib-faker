@@ -1,31 +1,50 @@
 # ts-faker
 
-## (Please feel free to contribute to this repo and/or make feature requests)
-
-Define a strategy or use one of the existing strategies, then create a time series data faker 
-use that strategy. 
-
+Create a time series data stream. Here are the highlights:
+ 
+* support comprehensive strategies for [random](#radnom), sinusoidal, square wave, file
+* support user defined strategies 
 
 ## Faker
+Every faker has one simple job -- keeps ticking based on user specified interval of the time series data. 
+Every time faker ticks, it leverages the [strategy](#strategies) to get a [data point](#data-point) 
+and its counter gets incremented. 
+
 ### `new Faker(options)`
-Constructor. 
-* `interval`: the interval between data points, in ms. For example 5000.
+The constructor takes the following options 
+* `interval`: the interval between data points, in ms. For example 1000. Default is 5000.
+* `strategy`: the strategy object that generate the fake data at each tick of the faker. 
 
 ### `getData(startTime, stopTime)`
+* Output: an array of [data points](#data-point) in the time range. 
 
 ### `Event: "new_data"`
-The `new_data` callback is called with the data point object whenever there is a 
-new data point. 
+The `new_data` event will be emitted with a [data point](#data-point) whenever there is a 
+new data point generated.  
 
 ## Strategies
-The faker supports the *following strategies*
+### Strategy API
+Each strategy must support the following APIs.
 
-### `Random`
+#### `generateValue(faker)`
+Generate a value point based 
+* Input: a faker object
+* Output: a [value point](#value-point)
+
+#### `getValueAry(faker, startCount, stopCount)`
+* Input: a the faker object, start count and stop count
+* Output: an array of [value points](#value-point)
+
+
+
+### Strategies available
+The faker supports the *following strategies*
+#### `Random`
 It supports the following distributions
   * Uniform distribution 
   * Normal distribution (in progress)
 
-### `Square wave`
+#### `Square wave`
 
 ```
 let SquareWaveStrategy = require('../../strategies/SquareWaveStrategy.js');
@@ -38,14 +57,11 @@ let squareWave = new SquareWaveStrategy({
 });
 ```
 
-### `Sine`
+#### `Sine`
+#### `File`
 
-
-
-### `File`
-
+### Contribute your strategy
 You can just put new strategies in the `strategies` folder. 
-
 
 ## Examples
 
@@ -86,15 +102,15 @@ More examples can be found in the ts-faker/examples folder
 ## Basic concepts
 
 ### Value point 
-```
+```javascript
 { 
      count: 10,
-     value: 5,
+     value: 5 // The value can be string or buffer, such as `new Buffer("humdity:60%")`. 
 }
 ``` 
 ### Data point 
 Data point is always an object that has a timestamp and a value.
-```
+```javascript
 {
     timestamp: new Date().getTime(), // time in ms 
     value: 0.5
@@ -102,7 +118,7 @@ Data point is always an object that has a timestamp and a value.
 ```
 
 The value can be string or buffer, such as `new Buffer("humdity:60%")`. 
-```
+```javascript
 {
     timestamp: new Date().getTime(), // time in ms
     value: "error: water level low"
