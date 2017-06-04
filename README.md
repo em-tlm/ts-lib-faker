@@ -1,4 +1,5 @@
 # ts-faker
+[![Build Status](https://travis-ci.org/tetrascience/ts-faker.svg?branch=master)](https://travis-ci.org/tetrascience/ts-faker)
 
 Create a time series data stream. Here are the highlights:
  
