@@ -3,8 +3,8 @@
 
 Create a time series data stream. Here are the highlights:
  
-* support comprehensive strategies for [random](#random), [sinusoidal](#sine), square wave, file
-* support user defined strategies 
+* support comprehensive faking strategies for [random](#random), [sinusoidal](#sine), square wave, file
+* support user defined strategies, 
 
 ## Usage
 ```bash
@@ -39,8 +39,8 @@ faker.getData(oneMinAgo, now);
 setTimeout(faker.getData.bind(faker,oneMinAgo, now), 1 * min);
 // return [dp1, dp2, ....] 
 
-faker.on("new_data",function(datapoint){
-    console.log(datapoint)
+faker.on("new_data",function(dataPoint){
+    console.log(dataPoint)
 });
 ```
 
@@ -59,7 +59,7 @@ You can pick from the [ones support natively](#Strategies).
 
 ### `getData(startTime, stopTime)`
 Retrieve the data within a certain time range.
-* Output: an array of [data points](#data-point) in the time range. 
+* Output: an array of [data points](#data-point) in the time range. d 
 
 ### `Event: "new_data"`
 The `new_data` event will be emitted with a [data point](#data-point) whenever there is a 
@@ -107,9 +107,9 @@ let squareWave = new SquareWaveStrategy({
 #### `Fixed values`
 
 ### Contribute your strategy
-You can just put new strategies in the `strategies` folder. 
-
-
+* put new strategies in the `strategies` folder and add it to the `strategies/index.js` file
+* add test in the test folder
+* add instruction to this readme file
 
 ## Basic concepts
 
@@ -138,6 +138,7 @@ The value can be string or buffer, such as `new Buffer("humdity:60%")`.
 ```
 
 ## Todo 
-* add support for 1111000022222
+* add test/readme for fixedValueStrategy
 * add unit test for the strategies.
 * support type buffer
+* template an object 
