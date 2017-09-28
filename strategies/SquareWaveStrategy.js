@@ -51,6 +51,10 @@ class SquareWaveStrategy extends Strategy {
         let value;
 
         count = count % this.period_count;
+        if (count < 0) {
+            // make sure the strategy works before the faker was began
+            count = count + this.period_count;
+        }
 
         if (count < Math.round(this.period_count * this.duty_cycle)) {
 
