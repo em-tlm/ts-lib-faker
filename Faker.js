@@ -85,6 +85,10 @@ class Faker extends EventEmitter {
             throw new Error("stop can not be an earlier time than start");
         }
 
+        if (!this.t0) {
+            return [];
+        }
+
         // no data for the future
         if (start > now) {
             return [];
