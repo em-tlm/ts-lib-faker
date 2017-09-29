@@ -76,7 +76,7 @@ class Faker extends EventEmitter {
         return dataPoint;
     }
 
-    getData(start, stop) {
+    getData(start, stop, enableHistory) {
         let now = new Date().getTime();
         if (!_.isNumber(start) || !_.isNumber(stop)){
             throw new Error("getData(start,stop) must take numbers as arguments");
@@ -85,18 +85,24 @@ class Faker extends EventEmitter {
             throw new Error("stop can not be an earlier time than start");
         }
 
-        // no data before the faker was began
-        if (stop <= this.t0) {
-            return [];
+        if (enableHistory) {
+            if (!this.t0) {
+                return [];
+            }
+        } else {
+            // no data before the faker was began
+            if (stop <= this.t0) {
+                return [];
+            }
+            // make start the faker's begin time
+            if (start <= this.t0) {
+                start = this.t0;
+            }
         }
+
         // no data for the future
         if (start > now) {
             return [];
-        }
-
-        // make start the faker's begin time
-        if (start <= this.t0) {
-            start = this.t0;
         }
 
         // make stop the current time, since now data in the future should be available

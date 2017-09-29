@@ -1,5 +1,5 @@
 # ts-faker
-[![Build Status](https://travis-ci.org/tetrascience/ts-faker.svg?branch=master)](https://travis-ci.org/tetrascience/ts-faker)
+[![Build Status](https://travis-ci.org/tetrascience/ts-lib-faker.svg?branch=master)](https://travis-ci.org/tetrascience/ts-lib-faker)
 
 Create a time series data stream. Here are the highlights:
  
@@ -57,13 +57,15 @@ The constructor takes the following options to create a faker.
 * `strategy`: the strategy object that generate the fake data at each tick of the faker. 
 You can pick from the [ones support natively](#Strategies).
 
-### `getData(startTime, stopTime)`
+### `getData(startTime, stopTime, enableHistory)`
 Retrieve the data within a certain time range.
-* Output: an array of [data points](#data-point) in the time range. d 
+* `enableHistory`: if true, `getData` can return historical data
+  before fake begins.
+* Output: an array of [data points](#data-point) in the time range.
 
 ### `Event: "new_data"`
 The `new_data` event will be emitted with a [data point](#data-point) whenever there is a 
-new data point generated.  
+new data point generated.
 
 ## Strategies
 Strategy does not have the concept of time. It's only aware of counts (the number of ticks that the faker has experienced).
