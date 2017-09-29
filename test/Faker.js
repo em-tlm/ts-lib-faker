@@ -62,7 +62,7 @@ describe('faker', function () {
             done();
         });
 
-        it.skip("should not be able to get data before the faker began",function(done){
+        it("should not be able to get data before the faker began",function(done){
             faker._strategy.getValueAry = ()=>{ throw new Error("this is even before the faker began!")};
             faker.begin();
             let now = new Date().getTime();
