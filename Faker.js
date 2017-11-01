@@ -76,7 +76,7 @@ class Faker extends EventEmitter {
         return dataPoint;
     }
 
-    getData(start, stop, enableHistory) {
+    getData(start, stop, enableHistory, limit) {
         let now = new Date().getTime();
         if (!_.isNumber(start) || !_.isNumber(stop)){
             throw new Error("getData(start,stop) must take numbers as arguments");
@@ -114,7 +114,7 @@ class Faker extends EventEmitter {
         // todo: ignore the paused time
 
         let startCount = Math.ceil( (start - this.t0) / this._interval );
-        let stopCount = Math.floor( (stop - this.t0) / this._interval );
+        let stopCount = Math.min(Math.floor( (stop - this.t0) / this._interval ), startCount + limit);
 
         // this can happen when start and stop are both within the same interval, namely between two counts
         // when startConut === stopCount, should still proceed, since there will be one data point
