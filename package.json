@@ -1,6 +1,6 @@
 {
   "name": "ts-faker",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "fake time series data",
   "main": "index.js",
   "directories": {

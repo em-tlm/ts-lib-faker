@@ -114,7 +114,10 @@ class Faker extends EventEmitter {
         // todo: ignore the paused time
 
         let startCount = Math.ceil( (start - this.t0) / this._interval );
-        let stopCount = Math.min(Math.floor( (stop - this.t0) / this._interval ), startCount + limit);
+        let stopCount = Math.floor( (stop - this.t0) / this._interval );
+        if (limit){
+          stopCount = Math.min(stopCount, startCount + limit);
+        }
 
         // this can happen when start and stop are both within the same interval, namely between two counts
         // when startConut === stopCount, should still proceed, since there will be one data point
