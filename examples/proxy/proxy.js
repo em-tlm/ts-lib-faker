@@ -5,8 +5,8 @@
 
 
 let Faker = require('../../Faker.js');
-let SineStrategy = require('../../Strategy/SineStrategy.js');
-let realDataSource = require('./realDataSource.js');
+let SineStrategy = require('../../strategies/SineStrategy.js');
+let realDataSource = require('./real-data-source.js');
 
 let config = {
     isLocal: true

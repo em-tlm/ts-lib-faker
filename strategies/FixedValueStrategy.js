@@ -93,4 +93,4 @@ class FixedValueStrategy extends Strategy {
     }
 }
 
-module.exports = FixedValueStategy;
+module.exports = FixedValueStrategy;
