@@ -19,14 +19,17 @@ class JsonSchemaBasedRandomStrategy extends Strategy {
     }
 
 
-    async generateValue(faker) {
+    async generateValue(tsLibFaker) {
         jsf.extend('faker', function() {
+            // Wrapper around faker.js library that contains
+            // various algorithms for random generation.
+            // Not to be confused with ts-lib-faker instance
             return require('faker');
         });
         const resultArray = _.map(_.range(this.dataCount), () => jsf.resolve(this.jsonSchema));
         const value = await Promise.all(resultArray);
         return {
-            count: faker._counter,
+            count: tsLibFaker._counter,
             value
         }
     }

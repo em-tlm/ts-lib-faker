@@ -59,7 +59,7 @@ class Faker extends EventEmitter {
 
     // begin generating time series data
     begin() {
-        this.t0 = new Date().getTime(); // begin time
+        this.t0 = Date.now(); // begin time
         this.timer = setInterval(()=> {
             this._fake();
         }, this._interval, true);
@@ -68,7 +68,7 @@ class Faker extends EventEmitter {
 
     // begin generating time series data when strategy is asynchronous
     beginAsync() {
-        this.t0 = new Date().getTime(); // begin time
+        this.t0 = Date.now(); // begin time
         this.timer = setInterval(()=> {
             this._fakeAsync();
         }, this._interval, true);
