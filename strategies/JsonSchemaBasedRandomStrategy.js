@@ -2,7 +2,7 @@
 
 const _ = require('lodash');
 const Strategy = require('../Strategy.js');
-const defaultDeviceSchema = require('../schemas/deviceSchema.js');
+const defaultDeviceSchema = require('../schemas/deviceSchema.json');
 const jsf = require('json-schema-faker');
 const Ajv = require('ajv');
 const ajv = new Ajv;
@@ -17,7 +17,6 @@ class JsonSchemaBasedRandomStrategy extends Strategy {
 
         this.validate = ajv.compile(this.jsonSchema);
     }
-
 
     async generateValue(tsLibFaker) {
         jsf.extend('faker', function() {
