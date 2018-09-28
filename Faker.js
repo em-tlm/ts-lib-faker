@@ -59,11 +59,30 @@ class Faker extends EventEmitter {
 
     // begin generating time series data
     begin() {
-        this.t0 = new Date().getTime(); // begin time
+        this.t0 = Date.now(); // begin time
         this.timer = setInterval(()=> {
             this._fake();
         }, this._interval, true);
         this._fake();
+    }
+
+    // begin generating time series data when strategy is asynchronous
+    beginAsync() {
+        this.t0 = Date.now(); // begin time
+        this.timer = setInterval(()=> {
+            this._fakeAsync();
+        }, this._interval, true);
+        this._fakeAsync();
+    }
+
+    // generates single data - when there is no need for loop execution
+    generateSingleData() {
+        this._fake();
+    }
+
+    // generate single data in async way - when there is no need for loop execution
+    generateSingleDataAsync() {
+        this._fakeAsync();
     }
 
     // generate a data point based on strategy
@@ -74,6 +93,15 @@ class Faker extends EventEmitter {
             value: valuePoint.value
         };
         return dataPoint;
+    }
+
+    // generate a data point based on strategy asynchronously
+    async generateDataPointAsync() {
+        let valuePoint = await this._strategy.generateValue(this);
+        return {
+            timestamp: valuePoint.count * this._interval + this.t0,
+            value: valuePoint.value
+        };
     }
 
     getData(start, stop, enableHistory, limit) {
@@ -147,6 +175,14 @@ class Faker extends EventEmitter {
     // private methods from this point on
     _fake() {
         const datapoint = this.generateDataPoint();
+        this._mostRecentDataPoint = datapoint;
+        this._counter++;
+        this.emit('new_data', datapoint);
+    }
+
+    // private method used for async strategies
+    async _fakeAsync() {
+        const datapoint = await this.generateDataPointAsync();
         this._mostRecentDataPoint = datapoint;
         this._counter++;
         this.emit('new_data', datapoint);
