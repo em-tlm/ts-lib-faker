@@ -26,7 +26,8 @@ class JsonSchemaBasedRandomStrategy extends Strategy {
             return require('faker');
         });
         const resultArray = _.map(_.range(this.dataCount), () => jsf.resolve(this.jsonSchema));
-        const value = await Promise.all(resultArray);
+        const objectArray = await Promise.all(resultArray);
+        const value = objectArray.map(x => JSON.stringify(x));
         return {
             count: tsLibFaker._counter,
             value

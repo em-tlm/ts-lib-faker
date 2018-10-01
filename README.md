@@ -107,6 +107,94 @@ let squareWave = new SquareWaveStrategy({
 #### `Sine`
 #### `File`
 #### `Fixed values`
+#### `JSON Schema`
+This strategy accepts JSON schema as input parameter and generates random objects based on
+that schema.
+
+Input JSON schema can be standard one, without any custom descriptive fields. In that case, values generated will
+be random and without any particular meaning (random numbers, random strings, etc.). This is useful when simple 
+integers are needed, or values that match some regular expression. 
+
+For example, with following schema:
+
+```
+{
+  "properties": {
+    "type": {
+      "enum": [
+        "disk"
+      ]
+    },
+    "label": {
+      "type": "string",
+      "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+    }
+  },
+  "required": [
+    "type",
+    "label"
+  ],
+  "additionalProperties": false
+}
+``` 
+JSON schema faker strategy will produce object like this:
+
+```
+{
+  "type": "disk",
+  "label": "De5D1c5A-7Bca-37A4-A186-bb5A2Ccd9Aa2"
+}
+```
+This is OK when we don't need any advanced logic behind generated values. However, in cases when we
+need some kind of advanced generation logic for fields, we can set up faker API methods. In other words,
+each field in JSON schema can be configured to use specific generator. For example:
+
+```
+{
+    "deviceId": {
+      "type": "string",
+      "description": "Device ID",
+      "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+    },
+    "name": {
+      "type": "string",
+      "description": "Device name",
+      "faker": "commerce.productName"
+    },
+    "type": {
+      "type": "string",
+      "description": "Device type",
+      "faker": "company.companyName"
+    },
+    "city": {
+      "type": "string",
+      "description": "Location",
+      "faker": "address.city"
+    }
+  }
+``` 
+Notice that in this JSON schema we have `faker` API methods for fields `name`, `type` and `city`.
+
+In this scenario we have following rules:
+* `deviceId` is of type string and string that satisfies regex will be produced
+* `name` field uses JS faker API method `commerce.productName` to generate value - that means that random 
+'meaningful' product name will be generated
+* `type` field uses JS faker API method `company.companyName` to produce some random 'meaningful' company name
+* `city` field uses JS faker API method `address.city` to produce some random 'meaningful' city name.
+
+Schema configured this way would yield object like this:
+
+````
+{ 
+    "deviceId": "9f8598B1-7cE0-9bc0-E4e6-4e5ef53DF8FD",    
+    "name": "Practical Frozen Chips",
+    "type": "Kuhlman, Lehner and Dooley",
+    "city": "Calechester" 
+}
+````
+
+Complete list of all available fake API methods can be found at following location:
+https://github.com/marak/Faker.js/
 
 ### Contribute your strategy
 * put new strategies in the `strategies` folder and add it to the `strategies/index.js` file
