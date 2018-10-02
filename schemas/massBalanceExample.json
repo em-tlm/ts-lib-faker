@@ -1,0 +1,115 @@
+{
+  "user": {
+    "id": "jxd44227"
+  },
+  "sample": {
+    "id": "SAM362248",
+    "barcode": "c4254bb0-9ed3-4752-b81d-edde3b47cca3",
+    "set": {
+      "id": "9ac92ddd-f3c2-4775-953f-b14f8f0d3c7d"
+    },
+    "batch": {
+      "id": "BAT532231"
+    },
+    "creation_date": "Tue Oct 02 2018 00:07:27 GMT+0200 (CEST)",
+    "expiry_date": "Wed Feb 13 2019 04:20:43 GMT+0100 (CET)"
+  },
+  "run": {
+    "assay": {
+      "description": "open-source US Dollar Cambridgeshire",
+      "id": "ASM736060"
+    },
+    "project": {
+      "id": "PROJ00647"
+    }
+  },
+  "method": {
+    "instrument": {
+      "id": "BMW301941"
+    }
+  },
+  "timestamp": "Tue Oct 02 2018 21:39:45 GMT+0200 (CEST)",
+  "system": {
+    "id": "BAL439",
+    "serial_number": "ABC877243924",
+    "vendor": "Cremin - Hilll",
+    "model": "AAV636",
+    "manufacture_date": "Wed Jun 13 2018 12:07:07 GMT+0200 (CEST)",
+    "location": {
+      "site": "VGV",
+      "building": 8,
+      "floor": "10",
+      "room": "762"
+    },
+    "firmware": {
+      "version": "4.3.3"
+    },
+    "owner": {
+      "id": "jxd03035"
+    },
+    "balance": {
+      "precision": {
+        "value": 0.11,
+        "unit": "Milligram"
+      },
+      "accuracy": {
+        "value": 0.45,
+        "unit": "Milligram"
+      }
+    }
+  },
+  "result": {
+    "net_weight": {
+      "value": 4.99,
+      "unit": "Milligram"
+    },
+    "gross_deviation": {
+      "value": 99.69,
+      "unit": "Milligram"
+    },
+    "gross_weight": {
+      "value": 59.48,
+      "unit": "Milligram"
+    },
+    "net_deviation": {
+      "value": 54.84,
+      "unit": "Milligram"
+    },
+    "tare_weight": {
+      "value": 91.38,
+      "unit": "Milligram"
+    },
+    "tare_deviation": {
+      "value": 47.63,
+      "unit": "Milligram"
+    }
+  },
+  "calibration": {
+    "passed": false,
+    "expiry_date": "Tue May 14 2019 03:09:02 GMT+0200 (CEST)",
+    "precision": {
+      "value": 0.67,
+      "unit": "Milligram"
+    },
+    "accuracy": {
+      "value": 0.76,
+      "unit": "Milligram"
+    },
+    "range": {
+      "min": {
+        "value": 94,
+        "unit": "Milligram"
+      },
+      "max": {
+        "value": 125414,
+        "unit": "Milligram"
+      }
+    }
+  },
+  "qualification": {
+    "passed": false,
+    "performance": "PQ10882",
+    "operational": "OQ22550",
+    "installation": "IQ297963"
+  }
+}
