@@ -117,7 +117,8 @@
           "examples": [
             "2018-09-27T16:10:49+01:00"
           ],
-          "faker": "date.recent"
+          "format": "date-time",
+          "faker": "dateISO.recent"
         },
         "expiry_date": {
           "$id": "#/properties/sample/properties/expiry_date",
@@ -127,7 +128,7 @@
           "examples": [
             "2018-10-27T16:10:49+01:00"
           ],
-          "faker": "date.future"
+          "faker": "dateISO.recent"
         }
       }
     },
@@ -231,7 +232,8 @@
       "examples": [
         "2018-09-28T13:10:49+01:00"
       ],
-      "faker": "date.recent"
+      "format": "date-time",
+      "faker": "dateISO.recent"
     },
     "system": {
       "$id": "#/properties/system",
@@ -297,7 +299,8 @@
           "examples": [
             "2005-04-15T21:09:49+01:00"
           ],
-          "faker": "date.past"
+          "format": "date-time",
+          "faker": "dateISO.past"
         },
         "location": {
           "$id": "#/properties/system/properties/location",
@@ -747,7 +750,8 @@
           "examples": [
             "2019-10-12T16:09:49+01:00"
           ],
-          "faker": "date.future"
+          "format": "date-time",
+          "faker": "dateISO.future"
         },
         "precision": {
           "$id": "#/properties/calibration/properties/precision",
