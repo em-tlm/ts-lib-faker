@@ -7,13 +7,13 @@ const TriplesStrategy = require('../../strategies/TriplesStrategy.js');
 const Faker = require('../../Faker.js');
 
 // generate array of 2 devices based on schema
-let tripletsStrategy = new TriplesStrategy({
-    ttlTemplateFile : 'input.ttl',
-    jsonFile: "input.json",
+let triplesStrategy = new TriplesStrategy({
+    ttlTemplateFile : 'balance.ttl',
+    jsonFile: "massBalanceExample.json",
     ttlFileOutput: "./"
 });
 let faker = new Faker({
-    strategy: tripletsStrategy,
+    strategy: triplesStrategy,
     interval: 2000
 });
 
