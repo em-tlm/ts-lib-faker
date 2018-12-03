@@ -8,8 +8,17 @@ const Chance = require('chance');
 const Ajv = require('ajv');
 const ajv = new Ajv;
 
+/**
+ * Json schema based random strategy. This strategy accepts valid JSON schema and generates JSON object based on
+ * given schema. Strategy supports custom libraries fake.js and random.js.
+ */
 class JsonSchemaBasedRandomStrategy extends Strategy {
 
+    /**
+     * Base constructor for strategy
+     *
+     * @param {object} options
+     */
     constructor(options) {
         options = options || {};
         super(options);
@@ -21,6 +30,12 @@ class JsonSchemaBasedRandomStrategy extends Strategy {
         this.extendFieldChanceApi();
     }
 
+    /**
+     * Method that generates value
+     *
+     * @param {object} tsLibFaker
+     * @returns {Promise<{count: number, value: string[]}>}
+     */
     async generateValue(tsLibFaker) {
         const resultArray = _.map(_.range(this.dataCount), () => jsf.resolve(this.jsonSchema));
         const objectArray = await Promise.all(resultArray);
@@ -31,6 +46,11 @@ class JsonSchemaBasedRandomStrategy extends Strategy {
         }
     }
 
+    /**
+     * Custom method that extends functionalities from fake.js library. Method is customized for following reasons:
+     * 1. To output dates in ISO format
+     * 2. To provide additional dates functions (last7 for date in last 7 days, and next7 for date in next 7 days)
+     */
     extendFieldFakerApi() {
         // Wrapper around faker.js library that contains
         // various algorithms for random generation.
@@ -49,11 +69,27 @@ class JsonSchemaBasedRandomStrategy extends Strategy {
                 })
             };
             faker.dateISO = dateIsoWrapper(faker.date);
+            faker.customDate = {
+                next7 : () => {
+                    let currentDate = Date.now();
+                    let sevenDaysFromNow = currentDate + 7*24*60*60*1000;
+                    return faker.date.between((new Date(currentDate)).toISOString(), (new Date(sevenDaysFromNow)).toISOString()).toISOString();
+                },
+                last7 : () => {
+                    let currentDate = Date.now();
+                    let sevenDaysBeforeNow = currentDate - 7*24*60*60*1000;
+                    return faker.date.between((new Date(sevenDaysBeforeNow)).toISOString(), (new Date(currentDate)).toISOString()).toISOString();
+                }
+            }
+
 
             return faker;
         });
     }
 
+    /**
+     * Custom method that extends chance.js library.
+     */
     extendFieldChanceApi() {
         jsf.extend('chance', () => new Chance());
     }

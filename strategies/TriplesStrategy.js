@@ -5,8 +5,17 @@ const _ = require('lodash');
 const handlebars = require('handlebars');
 const Strategy = require('../Strategy.js');
 
+/**
+ * Class that implements TTL file generation strategy. It accepts TTL template file, output folder location and list
+ * of JSON file to use against given template file. Number of output TTL files is equal to number of input JSON files.
+ */
 class TriplesStrategy extends Strategy {
 
+    /**
+     * Constructor for strategy
+     *
+     * @param {object} options
+     */
     constructor(options) {
         options = options || {};
         super(options);
@@ -14,13 +23,18 @@ class TriplesStrategy extends Strategy {
         this.ttlTemplateFile = options.ttlTemplateFile;
         this.validatePathArgument(this.ttlTemplateFile, "ttlTemplateFile");
 
-        this.jsonFile = options.jsonFile;
-        this.validatePathArgument(this.jsonFile, "jsonFile");
+        this.jsons = options.jsons;
 
         this.ttlFileOutput = options.ttlFileOutput;
         this.validatePathArgument(this.ttlFileOutput, "ttlFileOutput");
     }
 
+    /**
+     * Validates path based argument - if it is provided and if path exists
+     *
+     * @param {string} argumentValue
+     * @param {string} argumentName
+     */
     validatePathArgument(argumentValue, argumentName) {
         if (!argumentValue) {
             throw new Error(`Missing argument "${argumentName}"`);
@@ -30,19 +44,29 @@ class TriplesStrategy extends Strategy {
         }
     }
 
+    /**
+     * Generates TTL files based on given input
+     *
+     * @param {object} tsLibFaker
+     * @returns {{count: number, value: Array}}
+     */
     generateValue(tsLibFaker) {
         let sourceTtlTemplate = fs.readFileSync(this.ttlTemplateFile, 'utf8');
         let template = handlebars.compile(sourceTtlTemplate);
 
-        let sourceJson = fs.readFileSync(this.jsonFile, 'utf8');
-        let ttlContent = template(JSON.parse(sourceJson));
+        let fileOutputs = [];
+        this.jsons.forEach((jsonInput, index) => {
+            let ttlContent = template(jsonInput);
 
-        let fileOutput = `${this.ttlFileOutput}/0.ttl`;
-        fs.writeFileSync(fileOutput, ttlContent);
+            let fileOutput = `${this.ttlFileOutput}/${index}.ttl`;
+            fs.writeFileSync(fileOutput, ttlContent);
+
+            fileOutputs.push(fileOutput);
+        });
 
         return {
             count: tsLibFaker._counter,
-            value: fileOutput
+            value: fileOutputs
         }
     }
 }

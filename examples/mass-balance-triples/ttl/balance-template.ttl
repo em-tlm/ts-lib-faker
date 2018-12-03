@@ -1,0 +1,457 @@
+@prefix :      <http://purl.allotrope.org/example#> .
+@prefix qudt:  <http://qudt.org/schema/qudt#> .
+@prefix unit: <http://qudt.org/vocab/unit#> .
+@prefix unit-ext: <http://purl.allotrope.org/ontology/qudt-ext/unit#> .
+@prefix af-temp: <http://purl.allotrope.org/ontologies/temporary#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix af-p:   <http://purl.allotrope.org/ontologies/process#> .
+@prefix af-e:   <http://purl.allotrope.org/ontologies/equipment#> .
+@prefix af-c:   <http://purl.allotrope.org/ontologies/common#> .
+@prefix af-r:   <http://purl.allotrope.org/ontologies/result#> .
+@prefix af-rl:  <http://purl.allotrope.org/ontologies/role#> .
+@prefix af-x:   <http://purl.allotrope.org/ontologies/property#> .
+@prefix af-m: <http://purl.allotrope.org/ontologies/material#> .
+@prefix af-q: <http://purl.allotrope.org/ontologies/quality#> .
+@prefix af-sp: <http://purl.allotrope.org/ontologies/spatial#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix obo:   <http://purl.obolibrary.org/obo/> .
+@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<http://purl.allotrope.org/example/instanceData#>
+	rdf:type owl:Ontology ;
+	owl:imports <http://purl.allotrope.org/ontologies/afo> ,
+				<http://purl.allotrope.org/voc/afo/domain/WD/2018/04/weighing> ;
+.
+
+<urn:uuid:{{ balance.site.location.ttlUrn }}>			a							obo:BFO_0000029 ; #BFO_0000029
+														obo:RO_0001025				<urn:uuid:{{ balance.site.location.ttlUrn1 }}> .
+
+_:labId													a 							af-r:AFR_0000919 ; #local identifier AFR_0000919
+														af-x:AFX_0000690			"{{ balance.site.location.lab.name}}" ; #2F103
+														af-x:AFX_0002717			<urn:uuid:{{ balance.site.location.ttlUrn}}> .
+
+<urn:uuid:{{ balance.site.location.ttlUrn1 }}>			a							af-sp:AFSP_0000001 . #AFSP_0000001
+
+_:siteId												a 							af-r:AFR_0000919 ; #local identifier AFR_0000919
+														af-x:AFX_0000690			"{{ balance.site.location.siteName}}" ; #STV
+														af-x:AFX_0002717			<urn:uuid:{{ balance.site.location.ttlUrn1 }}> .
+
+<urn:uuid:{{ balance.ttlUrn }}>			                a 							af-e:AFE_0000693 ; # AFE_0000693
+														obo:RO_0001025				<urn:uuid:{{ balance.site.location.ttlUrn}}> .
+
+_:balanceManufacturer									a 							af-r:AFR_0001258 ; #AFR_0001258
+														af-x:AFX_0000690			"{{ balance.manufacturer.name }}" ; #Mettler Toledo
+														af-x:AFX_0002699			<urn:uuid:{{ balance.ttlUrn }}> .
+
+_:balanceSerialNumber									a 							obo:IAO_0000131 ; #IAO_0000131
+														af-x:AFX_0000690			"{{ balance.manufacturer.serialNumber.value }}" ; #ABC112049854
+														af-x:AFX_0002717			<urn:uuid:{{ balance.ttlUrn }}> .
+
+_:balanceManufactureDate								a 							af-temp:ManufactureDate ;
+														af-x:AFX_0000690			"{{ balance.manufacturer.manufactureDate }}" ; #2005-04-15TT21:09:49+01:00
+														af-x:AFX_0002717			<urn:uuid:{{ balance.ttlUrn }}> .
+
+_:balanceModel											a 							obo:IAO_0000017 ; #IAO_0000017
+														af-x:AFX_0000690			"{{ balance.manufacturer.model.value }}" ; #XSR104
+														af-x:AFX_0002699			<urn:uuid:{{ balance.ttlUrn }}> .
+
+_:balanceFirmware										a 							af-r:AFR_0001259 ; #AFR_0001259
+														af-x:AFX_0000690			"{{ balance.manufacturer.firmware.value }}" ; #1.3.5
+														af-x:AFX_0002699			<urn:uuid:{{ balance.ttlUrn }}> .
+
+_:balancePrecision										a 							af-temp:BalancePrecisionProposition ;
+														af-x:AFX_0002699			<urn:uuid:{{ balance.ttlUrn }}> ;
+														qudt:numericValue			"{{ balance.precision.value }}"^^xsd:double ; #0.07
+														qudt:unit					unit-ext:{{ balance.precision.unit }} . #MilliGram
+
+_:balanceAccuracy										a 							af-temp:BalanceAccuracyProposition ;
+														af-x:AFX_0002699			<urn:uuid:{{ balance.ttlUrn }}> ;
+														qudt:numericValue			"{{ balance.accuracy.value }}"^^xsd:double ; #0.1
+														qudt:unit					unit-ext:{{ balance.accuracy.unit }} . #MilliGram
+
+_:balanceRange											a 							af-temp:BalanceRangeProposition ;
+														af-x:AFX_0002699			<urn:uuid:{{ balance.ttlUrn }}> ;
+														af-x:AFX_0002696			[
+																						a 							af-c:AFC_0000021 ; #AFC_0000021
+																						af-x:AFX_0000674			"{{ balance.range.maximum }}"^^xsd:double ; #1200000
+																						af-x:AFX_0000670			"{{ balance.range.minimum }}"^^xsd:double ; #8.2
+																						qudt:unit					unit-ext:{{ balance.range.unit }} #MilliGram
+																					] .
+
+_:balanceId												a 							obo:IAO_0000578 ; #centrally registered identifier
+														af-x:AFX_0000690			"{{ balance.name }}" ; #BAL001
+														af-x:AFX_0002717			<urn:uuid:{{ balance.ttlUrn }}> .
+
+<urn:uuid:{{ balance.registry.ttlUrn }}>	            a 							obo:IAO_0000579 ; #central identifier registry
+														obo:BFO_0000051				_:balanceId	.
+
+_:equipmentRegistryId									a 							af-r:AFR_0000917 ; #identifier
+														af-x:AFX_0000690			"https://registry.equipment.company.com" ;
+														af-x:AFX_0002717			<urn:uuid:{{ balance.registry.ttlUrn }}> .
+
+_:systemOwnershipProcess								a 							af-temp:SystemOwnershipProcess ;
+														obo:RO_0000057				<urn:uuid:{{ balance.ttlUrn }}> ,
+																					<urn:uuid:{{balance.owner.ttlUrn}}> .
+
+<urn:uuid:{{balance.owner.ttlUrn}}>			            a 							af-m:AFM_0001083 ;
+														obo:RO_0000087				[
+																						a af-temp:SystemOwnerRole ;
+																						obo:BFO_0000054 _:systemOwnershipProcess
+																					] .
+
+
+_:systemOwnerId											a 							obo:IAO_0000578 ; #centrally registered identifier
+														af-x:AFX_0000690			"{{balance.owner.name}}" ; #jxd00001
+														af-x:AFX_0002717			<urn:uuid:{{balance.owner.ttlUrn}}> .
+
+<urn:uuid:{{personRegistry.ttlUrn}}>			        a 							obo:IAO_0000579 ; #central identifier registry
+														obo:BFO_0000051				_:systemOwnerId ,
+																					_:analystId ,
+																					_:qualifierId ,
+																					_:calibratorId ,
+																					_:custodianId .
+
+_:personRegistryId										a 							af-r:AFR_0000917 ; #identifier
+														af-x:AFX_0000690			"https://registry.people.company.com" ;
+														af-x:AFX_0002717			<urn:uuid:{{personRegistry.ttlUrn}}> .
+
+<urn:uuid:{{balance.qualification.ttlUrn}}> 			a 							af-temp:QualificationProcess ;
+														obo:RO_0002230				_:qualificationEnd ;
+														obo:RO_0000057				<urn:uuid:{{balance.qualification.qualifier.ttlUrn}}> ;
+														af-x:AFX_0000544			<urn:uuid:{{balance.qualification.results.ttlUrn}}> ,
+																					<urn:uuid:{{balance.qualification.installation.ttlUrn}}> ,
+																					<urn:uuid:{{balance.qualification.operational.ttlUrn}}> ,
+																					<urn:uuid:{{balance.qualification.performance.ttlUrn}}> .
+
+_:qualificationEnd 										a 							af-p:AFP_0003286 .
+
+_:qualificationEndTimeDatum								a 							af-r:AFR_0000966 ;
+														af-x:AFX_0000690			"{{balance.qualification.endDatum}}"^^xsd:dateTimeStamp ; # 2006-10-19T14:09:49+01:00
+														af-x:AFX_0002699			_:qualificationEnd .
+
+<urn:uuid:{{balance.qualification.qualifier.ttlUrn}}>			a 							af-m:AFM_0001083 ;
+														obo:RO_0000087				[
+																						a af-temp:QualifierRole ;
+																						obo:BFO_0000054 _:qualification
+																					] .
+
+_:qualifierId											a 							obo:IAO_0000578 ; #centrally registered identifier
+														af-x:AFX_0000690			"{{balance.qualification.qualifier.name}}" ; #jxd00002
+														af-x:AFX_0002717			<urn:uuid:{{balance.qualification.qualifier.ttlUrn}}> .
+
+<urn:uuid:{{balance.qualification.results.ttlUrn}}>			a 							af-temp:QualificationResult ;
+														af-x:AFX_0002699			<urn:uuid:{{ balance.ttlUrn }}> ;
+														af-x:AFX_0002803			[
+																						a af-temp:QualificationPassedFacet ;
+																						af-x:AFX_0000690 "true"^^xsd:boolean
+																					] .
+
+<urn:uuid:{{balance.qualification.installation.ttlUrn}}>			a 							af-temp:InstallationQualification ;
+														af-x:AFX_0002699			<urn:uuid:{{ balance.ttlUrn }}> .
+
+_:installationQualificationId							a 							obo:IAO_0000578 ; #centrally registered identifier
+														af-x:AFX_0000690			"{{balance.qualification.installation.name}}" ; #IQ000001
+														af-x:AFX_0002717			<urn:uuid:{{balance.qualification.installation.ttlUrn}}> .
+
+<urn:uuid:{{balance.qualification.operational.ttlUrn}}>			a 							af-temp:OperationalQualification ;
+														af-x:AFX_0002699			<urn:uuid:{{ balance.ttlUrn }}> .
+
+_:operationalQualificationId							a 							obo:IAO_0000578 ; #centrally registered identifier
+														af-x:AFX_0000690			"{{balance.qualification.operational.name}}" ; # OQ000001
+														af-x:AFX_0002717			<urn:uuid:{{balance.qualification.operational.ttlUrn}}> .
+
+<urn:uuid:{{balance.qualification.performance.ttlUrn}}>			a 							af-temp:PerformanceQualification ;
+														af-x:AFX_0002699			<urn:uuid:{{ balance.ttlUrn }}> .
+
+_:performanceQualificationId							a 							obo:IAO_0000578 ; #centrally registered identifier
+														af-x:AFX_0000690			"{{balance.qualification.performance.name}}" ; #PQ000001
+														af-x:AFX_0002717			<urn:uuid:{{balance.qualification.performance.ttlUrn}}> .
+
+_:qualificationReportRegistry							a 							obo:IAO_0000579 ; #central identifier registry
+														obo:BFO_0000051				_:installationQualificationId ,
+																					_:operationalQualificationId ,
+																					_:performanceQualificationId .
+
+_:qualificationReportRegistryId							a 							af-r:AFR_0000917 ; #identifier
+														af-x:AFX_0000690			"https://registry.qualificationreports.company.com" ;
+														af-x:AFX_0002717			_:qualificationReportRegistry .
+
+<urn:uuid:{{balance.calibration.ttlUrn}}>			    a 							af-temp:CalibrationProcess ;
+														obo:RO_0002230				_:calibrationEnd ;
+														obo:RO_0000057				<urn:uuid:{{balance.calibration.calibrator.ttlUrn}}> ;
+														af-x:AFX_0000544			<urn:uuid:{{balance.calibration.results.ttlUrn}}> .
+
+_:calibrationEnd 										a 							af-p:AFP_0003286 .
+
+_:calibrationEndTimeDatum								a 							af-r:AFR_0000966 ;
+														af-x:AFX_0000690			"{{balance.calibration.endDatum}}"^^xsd:dateTimeStamp ; #2016-10-12T16:09:49+01:00
+														af-x:AFX_0002699			_:calibrationEnd .
+
+<urn:uuid:{{balance.calibration.calibrator.ttlUrn}}>			a 							af-m:AFM_0001083 ;
+														obo:RO_0000087				[
+																						a af-temp:CalibratorRole ;
+																						obo:BFO_0000054 _:calibration
+																					] .
+
+_:calibratorId											a 							obo:IAO_0000578 ; #centrally registered identifier
+														af-x:AFX_0000690			"{{balance.calibration.calibrator.name}}" ; #jxd00003
+														af-x:AFX_0002717			<urn:uuid:{{balance.calibration.calibrator.ttlUrn}}> .
+
+<urn:uuid:{{balance.calibration.results.ttlUrn}}>			a 							af-temp:CalibrationResult ;
+														af-x:AFX_0002699			<urn:uuid:{{ balance.ttlUrn }}> ;
+														af-x:AFX_0002803			[
+																						a af-temp:CalibrationPassedFacet ;
+																						af-x:AFX_0000690 "true"^^xsd:boolean
+																					] ,
+																					[
+																						a af-temp:CalibrationExpiryDateFacet ;
+																						af-x:AFX_0000690 "{{balance.calibration.results.expiryDate}}"^^xsd:dateTimeStamp #2019-10-12T16:09:49+01:00
+																					] ,
+																					[
+																						a af-temp:CalibrationRangeFacet ;
+																						af-x:AFX_0002696 [
+																								a 							af-c:AFC_0000021 ;
+																								af-x:AFX_0000674			"{{balance.calibration.results.range.maximum}}"^^xsd:double ; #1000000
+																								af-x:AFX_0000670			"{{balance.calibration.results.range.minimum}}"^^xsd:double ; #82
+																								qudt:unit					unit-ext:{{balance.calibration.results.range.unit}} #MilliGram
+																						]
+																					] ,
+																					[
+																						a af-temp:CalibrationPrecisionFacet ;
+																						qudt:numericValue "{{balance.calibration.results.precision.value}}"^^xsd:double ; #0.1
+																						qudt:unit unit-ext:{{balance.calibration.results.precision.unit}} #Milligram
+																					] ,
+																					[
+																						a af-temp:CalibrationAccuracyFacet ;
+																						qudt:numericValue "{{balance.calibration.results.accuracy.value}}"^^xsd:double ; #0.2
+																						qudt:unit unit-ext:{{balance.calibration.results.accuracy.unit}} #Milligram
+																					] .
+
+<urn:uuid:{{ measureProcess.taring.ttlUrn }}>           a 							af-p:AFP_0000640 ; #AFP_0000640
+														obo:RO_0002230				_:taringEnd ;
+														obo:RO_0000057				<urn:uuid:{{measureProcess.analyst.ttlUrn}}> ,
+																					<urn:uuid:{{ balance.ttlUrn }}> ;
+														af-x:AFX_0002805			<urn:uuid:{{measureProcess.taring.plan.ttlUrn}}> ;
+														af-x:AFX_0000544			_:taringResult .
+
+_:taringId												a 							af-r:AFR_0000917 ; #identifier
+														af-x:AFX_0000690			"urn:uuid:{{ measureProcess.taring.identifier}}" ; #urn:uuid:595516fa-2bcf-11b2-806a-3252cb535eeb
+														af-x:AFX_0002717			<urn:uuid:{{ measureProcess.taring.ttlUrn }}> .
+
+<urn:uuid:{{measureProcess.taring.plan.ttlUrn}}>			a 							af-r:AFR_0001501 .
+
+_:taringEnd	 											a 							af-p:AFP_0003286 .
+
+_:taringEndTimeDatum									a 							af-r:AFR_0000966 ;
+														af-x:AFX_0000690			"{{measureProcess.taring.endDatum}}"^^xsd:dateTimeStamp ;
+														af-x:AFX_0002699			_:taringEnd .
+
+<urn:uuid:{{measureProcess.analyst.ttlUrn}}>			a 							af-m:AFM_0001083 ;
+														obo:RO_0000087				[
+																						a af-rl:AFRL_0000003 ;
+																						obo:BFO_0000054 _:taring
+																					] .
+
+_:analystId												a 							obo:IAO_0000578 ; #centrally registered identifier
+														af-x:AFX_0000690			"{{measureProcess.analyst.name}}" ; #jxd00004
+														af-x:AFX_0002717			<urn:uuid:{{measureProcess.analyst.ttlUrn}}> .
+
+_:taringResult											a 							af-r:AFR_0000062 ;
+														af-x:AFX_0002803			[
+																						a af-temp:TareWeightFacet ;
+																						qudt:numericValue "{{ measureProcess.taring.results.weight.value }}"^^xsd:double ; #51.62
+																						qudt:unit unit-ext:MilliGram
+																					] ,
+																					[
+																						a af-temp:TareDeviationFacet ;
+																						qudt:numericValue "{{ measureProcess.taring.results.deviation.value }}"^^xsd:double ; # 0.05
+																						qudt:unit unit-ext:Milligram
+																					] .
+
+<urn:uuid:{{ measureProcess.weighing.ttlUrn }}>                        a 							af-p:AFP_0000503 ;
+														obo:RO_0002230				_:weighingEnd ;
+														af-x:AFX_0000696			<urn:uuid:{{sample.container.ttlUrn}}> ;
+														af-x:AFX_0000546			<urn:uuid:{{sample.container.ttlUrn}}> ;
+														obo:RO_0000057				<urn:uuid:{{measureProcess.analyst.ttlUrn}}> ,
+																					<urn:uuid:{{ balance.ttlUrn }}> ;
+														af-x:AFX_0002805			<urn:uuid:{{measureProcess.weighing.plan.ttlUrn}}> ;
+														af-x:AFX_0000544			<urn:uuid:{{ measureProcess.weighing.results.ttlUrn }}> .
+
+_:weighingId											a 							af-r:AFR_0000917 ; #identifier
+														af-x:AFX_0000690			"urn:uuid:{{ measureProcess.weighing.identifier }}" ;
+														af-x:AFX_0002717			<urn:uuid:{{ measureProcess.weighing.ttlUrn }}> .
+
+<urn:uuid:{{measureProcess.weighing.plan.ttlUrn}}>			a 							af-r:AFR_0001501 .
+
+_:weighingEnd	 										a 							af-p:AFP_0003286 .
+
+_:weighingEndTimeDatum									a 							af-r:AFR_0000966 ;
+														af-x:AFX_0000690			"{{ measureProcess.weighing.endDatum }}"^^xsd:dateTimeStamp ; #2018-09-28T13:10:49+01:00
+														af-x:AFX_0002699			_:weighingEnd .
+
+<urn:uuid:{{ measureProcess.weighing.results.ttlUrn }}>		                a 							af-r:AFR_0000062 ;
+														af-x:AFX_0002803			[
+																						a af-temp:GrossWeightFacet ;
+																						qudt:numericValue "{{ measureProcess.weighing.results.grossWeigth.value }}"^^xsd:double ; #60.73
+																						qudt:unit unit-ext:MilliGram
+																					] ,
+																					[
+																						a af-temp:GrossDeviationFacet ;
+																						qudt:numericValue "{{ measureProcess.weighing.results.grossDeviation.value }}"^^xsd:double ; #0.05
+																						qudt:unit unit-ext:Milligram
+																					] ,
+																					[
+																						a af-temp:NetWeightFacet ;
+																						qudt:numericValue "{{ measureProcess.weighing.results.netWeigth.value }}"^^xsd:double ; #9.11
+																						qudt:unit unit-ext:MilliGram
+																					] ,
+																					[
+																						a af-temp:NetDeviationFacet ;
+																						qudt:numericValue "{{ measureProcess.weighing.results.netDeviation.value }}"^^xsd:double ; #0.05
+																						qudt:unit unit-ext:Milligram
+																					] .
+
+<urn:uuid:{{ measureProcess.ttlUrn }}>	                a 							obo:OBI_0000011 ;
+														af-x:AFX_0002805			_:companySOPPlanSpec ;
+														obo:BFO_0000051 			<urn:uuid:{{ measureProcess.taring.ttlUrn }}> ,
+																					<urn:uuid:{{ measureProcess.weighing.ttlUrn }}> .
+
+_:plannedProcessId										a 							af-r:AFR_0000917 ; #identifier
+														af-x:AFX_0000690			"urn:uuid:{{ measureProcess.identifier }}" ;
+														af-x:AFX_0002717			<urn:uuid:{{ measureProcess.ttlUrn }}> .
+
+<urn:uuid:{{plan.specification.ttlUrn}}>			    a 							af-r:AFR_0001501 ;
+														obo:BFO_0000051 			<urn:uuid:{{measureProcess.taring.plan.ttlUrn}}> ,
+																					<urn:uuid:{{measureProcess.weighing.plan.ttlUrn}}> .
+
+_:weighingMethodId										a 							obo:IAO_0000578 ; #centrally registered identifier
+														af-x:AFX_0000690			"{{method.weighingMethodName}}" ; #BWM000001
+														af-x:AFX_0002717			<urn:uuid:{{plan.specification.ttlUrn}}> .
+
+<urn:uuid:{{method.ttlUrn}}>			                a 							obo:IAO_0000579 ; #central identifier registry
+														obo:BFO_0000051				_:weighingMethodId ,
+																					_:assayMethodId .
+
+_:companyMethodRegistryId								a 							af-r:AFR_0000917 ; #identifier
+														af-x:AFX_0000690			"https://registry.methods.company.com" ;
+														af-x:AFX_0002717			<urn:uuid:{{method.ttlUrn}}> .
+
+<urn:uuid:{{sample.container.ttlUrn}}>			        a 							af-e:AFE_0000407 ; #AFE_0000407
+														obo:RO_0001025				<urn:uuid:{{ balance.site.location.ttlUrn }}>;
+														af-x:AFX_0001048			<urn:uuid:{{sample.container.material.ttlUrn}}> .
+
+_:sampleContainerId										a 							af-r:AFR_0000917 ; #identifier
+														af-x:AFX_0000690			"{{sample.container.name}}" ; #BAR0000001
+														af-x:AFX_0002717			<urn:uuid:{{sample.container.ttlUrn}}> .
+
+<urn:uuid:{{sample.container.custodian.ttlUrn}}>			a 							af-m:AFM_0001083 ;
+														obo:RO_0000087				[
+																						a af-temp:CustodianRole ;
+																						obo:BFO_0000054 _:custody
+																					] .
+
+_:custodianId											a 							obo:IAO_0000578 ; #centrally registered identifier
+														af-x:AFX_0000690			"{{sample.container.custodian.name}}" ; #jxd00005
+														af-x:AFX_0002717			<urn:uuid:{{sample.container.custodian.ttlUrn}}> .
+
+<urn:uuid:{{sample.container.material.ttlUrn}}>			a 							af-m:AFM_0000275 ; #AFM_0000275
+														obo:OBI_0000643				obo:CHEBI_26078 ;
+														obo:RO_0000087				[
+																						a af-rl:AFRL_0000035 ;
+																						obo:BFO_0000054 <urn:uuid:{{assay.ttlUrn}}>
+																					] .
+
+_:sampleDescription										a 							af-r:AFR_0000922 ; #description
+														af-x:AFX_0000690			"{{sample.container.material.description}}" ; #Phosphoric acid (aq)
+														af-x:AFX_0002699			<urn:uuid:{{sample.container.material.ttlUrn}}> .
+
+_:sampleCreationDate									a 							af-temp:CreationDateFacet ;
+														af-x:AFX_0000690			"{{sample.container.material.creationDate}}"^^xsd:dateTimeStamp ; #2018-09-27T16:10:49+01:00
+														af-x:AFX_0002699			<urn:uuid:{{sample.container.material.ttlUrn}}> .
+
+_:sampleExpiryDate										a 							af-temp:ExpiryDateFacet ;
+														af-x:AFX_0000690			"{{sample.container.material.expiryDate}}"^^xsd:dateTimeStamp ; #2018-10-27T16:10:49+01:00
+														af-x:AFX_0002699			<urn:uuid:{{sample.container.material.ttlUrn}}> .
+
+_:sampleId												a 							obo:IAO_0000578 ; #centrally registered identifier
+														af-x:AFX_0000690			"{{sample.container.material.name}}" ; #SAM000001
+														af-x:AFX_0002717			<urn:uuid:{{sample.container.material.ttlUrn}}> .
+
+<urn:uuid:{{sample.container.material.sampleRegistry.ttlUrn}}>			a 							obo:IAO_0000579 ; #central identifier registry
+														obo:BFO_0000051				_:sampleId .
+
+_:sampleRegistryId										a 							af-r:AFR_0000917 ; #identifier
+														af-x:AFX_0000690			"https://registry.samples.company.com" ;
+														af-x:AFX_0002717			<urn:uuid:{{sample.container.material.sampleRegistry.ttlUrn}}> .
+
+<urn:uuid:{{assay.ttlUrn}}>			                    a 							af-p:AFP_0002680 ; #AFP_0002680
+														obo:BFO_0000051 			<urn:uuid:{{method.assay.ttlUrn}}> ;
+														af-x:AFX_0000696			<urn:uuid:{{sample.container.material.ttlUrn}}> .
+
+_:assayId												a 							obo:IAO_0000578 ; #centrally registered identifier
+														af-x:AFX_0000690			"{{assay.name}}" ; #EXP000001
+														af-x:AFX_0002717			<urn:uuid:{{assay.ttlUrn}}> .
+
+<urn:uuid:{{assay.registry.ttlUrn}}>			        a 							obo:IAO_0000579 ; #central identifier registry
+														obo:BFO_0000051				_:assayId .
+
+_:assayRegistryId										a 							af-r:AFR_0000917 ; #identifier
+														af-x:AFX_0000690			"https://registry.experiments.company.com" ;
+														af-x:AFX_0002717			<urn:uuid:{{assay.registry.ttlUrn}}> .
+
+<urn:uuid:{{method.assay.ttlUrn}}>			            a 							af-r:AFR_0001501 .
+
+_:assayMethodId											a 							obo:IAO_0000578 ; #centrally registered identifier
+														af-x:AFX_0000690			"{{method.assay.name}}" ; #ASM000001
+														af-x:AFX_0002717			<urn:uuid:{{method.assay.ttlUrn}}> .
+
+<urn:uuid:{{project.ttlUrn}}>			                a 							af-temp:Project ;
+														obo:BFO_0000051 			<urn:uuid:{{assay.ttlUrn}}> .
+
+_:projectId												a 							obo:IAO_0000578 ; #centrally registered identifier
+														af-x:AFX_0000690			"{{project.name}}" ; #PROJ00001
+														af-x:AFX_0002717			<urn:uuid:{{project.ttlUrn}}> .
+
+<urn:uuid:{{project.registry.ttlUrn}}>			        a 							obo:IAO_0000579 ; #central identifier registry
+														obo:BFO_0000051				_:projectId .
+
+_:projectRegistryId										a 							af-r:AFR_0000917 ; #identifier
+														af-x:AFX_0000690			"https://registry.projects.company.com" ;
+														af-x:AFX_0002717			<urn:uuid:{{project.registry.ttlUrn}}> .
+
+_:objectiveDescription									a 							af-r:AFR_0000922 ; #description
+														af-x:AFX_0000690			"{{assay.description.value}}" ; #Standard for comparison in stability study
+														af-x:AFX_0002730			[
+																						a af-rl:AFRL_0000015 ; #AFRL_0000015
+																						af-x:AFX_0002730 <urn:uuid:{{assay.ttlUrn}}>
+																					] .
+
+<urn:uuid:{{batch.ttlUrn}}> 		                    a 							af-m:AFM_0000347 . #AFM_0000347
+
+_:batchId												a 							obo:IAO_0000578 ; #centrally registered identifier
+														af-x:AFX_0000690			"{{batch.name}}" ; #BAT000001
+														af-x:AFX_0002717			<urn:uuid:{{batch.ttlUrn}}> .
+
+<urn:uuid:{{batch.registry.ttlUrn}}>			        a 							obo:IAO_0000579 ; #central identifier registry
+														obo:BFO_0000051				_:batchId .
+
+_:batchRegistryId										a 							af-r:AFR_0000917 ; #identifier
+														af-x:AFX_0000690			"https://registry.materials.company.com" ;
+														af-x:AFX_0002717			<urn:uuid:{{batch.registry.ttlUrn}}> .
+
+<urn:uuid:{{delivery.ttlUrn}}>			                a 							af-p:AFP_0003575 ;
+														af-x:AFX_0000546 			<urn:uuid:{{batch.ttlUrn}}> .
+
+_:deliveryId											a 							obo:IAO_0000578 ; #centrally registered identifier
+														af-x:AFX_0000690			"{{delivery.name}}" ; #DEL000001
+														af-x:AFX_0002717			<urn:uuid:{{delivery.ttlUrn}}> .
+
+<urn:uuid:{{delivery.registry.ttlUrn}}>			        a 							obo:IAO_0000579 ; #central identifier registry
+														obo:BFO_0000051				_:deliveryId .
+
+_:deliveryRegistryId									a 							af-r:AFR_0000917 ; #identifier
+														af-x:AFX_0000690			"https://registry.deliveries.company.com" ;
+														af-x:AFX_0002717			<urn:uuid:{{delivery.registry.ttlUrn}}> .

@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": [
+    "weighingMethodName"
+  ],
+  "properties": {
+    "weighingMethodName": {
+      "type": "string",
+      "examples": [
+        "BWM000001"
+      ],
+      "pattern": "^BWM[0-9]{6}$"
+    }
+  }
+}
