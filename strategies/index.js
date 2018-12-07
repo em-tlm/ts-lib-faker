@@ -8,5 +8,7 @@ module.exports = {
     Random: require('./RandomStrategy.js'),
     Sine: require('./SineStrategy.js'),
     SquareWave: require('./SquareWaveStrategy.js'),
-    FixedValueStrategy: require('./FixedValueStrategy')
+    FixedValueStrategy: require('./FixedValueStrategy'),
+    JsonSchemaBasedRandomStrategy: require('./JsonSchemaBasedRandomStrategy.js'),
+    TriplesStrategy: require('./TriplesStrategy')
 };

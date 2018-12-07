@@ -1,0 +1,960 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://example.com/root.json",
+  "type": "object",
+  "title": "The Root Schema",
+  "required": [
+    "user",
+    "sample",
+    "run",
+    "method",
+    "timestamp",
+    "system",
+    "result",
+    "calibration",
+    "qualification"
+  ],
+  "properties": {
+    "user": {
+      "$id": "#/properties/user",
+      "type": "object",
+      "title": "The User Schema",
+      "required": [
+        "id"
+      ],
+      "properties": {
+        "id": {
+          "$id": "#/properties/user/properties/id",
+          "type": "string",
+          "title": "The Id Schema",
+          "default": "",
+          "examples": [
+            "jxd00001"
+          ],
+          "pattern": "^jxd[0-9]{5}$"
+        }
+      }
+    },
+    "sample": {
+      "$id": "#/properties/sample",
+      "type": "object",
+      "title": "The Sample Schema",
+      "required": [
+        "id",
+        "barcode",
+        "set",
+        "batch",
+        "creation_date",
+        "expiry_date"
+      ],
+      "properties": {
+        "id": {
+          "$id": "#/properties/sample/properties/id",
+          "type": "string",
+          "title": "The Id Schema",
+          "default": "",
+          "examples": [
+            "SAM000001"
+          ],
+          "pattern": "^SAM[0-9]{6}$"
+        },
+        "barcode": {
+          "$id": "#/properties/sample/properties/barcode",
+          "type": "string",
+          "title": "The Barcode Schema",
+          "default": "",
+          "examples": [
+            "Alpha-numeric container identifier"
+          ],
+          "faker": "random.uuid"
+        },
+        "set": {
+          "$id": "#/properties/sample/properties/set",
+          "type": "object",
+          "title": "The Set Schema",
+          "required": [
+            "id"
+          ],
+          "properties": {
+            "id": {
+              "$id": "#/properties/sample/properties/set/properties/id",
+              "type": "string",
+              "title": "The Id Schema",
+              "default": "",
+              "examples": [
+                "Alpha-numeric batch identifier"
+              ],
+              "faker": "random.uuid"
+            }
+          }
+        },
+        "batch": {
+          "$id": "#/properties/sample/properties/batch",
+          "type": "object",
+          "title": "The Batch Schema",
+          "required": [
+            "id"
+          ],
+          "properties": {
+            "id": {
+              "$id": "#/properties/sample/properties/batch/properties/id",
+              "type": "string",
+              "title": "The Id Schema",
+              "default": "",
+              "examples": [
+                "BAT000001"
+              ],
+              "pattern": "^BAT[0-9]{6}$"
+            }
+          }
+        },
+        "creation_date": {
+          "$id": "#/properties/sample/properties/creation_date",
+          "type": "string",
+          "title": "The Creation_date Schema",
+          "default": "",
+          "examples": [
+            "2018-09-27T16:10:49+01:00"
+          ],
+          "format": "date-time",
+          "faker": "dateISO.recent"
+        },
+        "expiry_date": {
+          "$id": "#/properties/sample/properties/expiry_date",
+          "type": "string",
+          "title": "The Expiry_date Schema",
+          "default": "",
+          "examples": [
+            "2018-10-27T16:10:49+01:00"
+          ],
+          "faker": "dateISO.recent"
+        }
+      }
+    },
+    "run": {
+      "$id": "#/properties/run",
+      "type": "object",
+      "title": "The Run Schema",
+      "required": [
+        "assay",
+        "project"
+      ],
+      "properties": {
+        "assay": {
+          "$id": "#/properties/run/properties/assay",
+          "type": "object",
+          "title": "The Assay Schema",
+          "required": [
+            "description",
+            "id"
+          ],
+          "properties": {
+            "description": {
+              "$id": "#/properties/run/properties/assay/properties/description",
+              "type": "string",
+              "title": "The Description Schema",
+              "default": "",
+              "examples": [
+                "Standard for comparison in stability study"
+              ],
+              "faker": "random.words"
+            },
+            "id": {
+              "$id": "#/properties/run/properties/assay/properties/id",
+              "type": "string",
+              "title": "The Id Schema",
+              "default": "",
+              "examples": [
+                "ASM000001"
+              ],
+              "pattern": "^ASM[0-9]{6}$"
+            }
+          }
+        },
+        "project": {
+          "$id": "#/properties/run/properties/project",
+          "type": "object",
+          "title": "The Project Schema",
+          "required": [
+            "id"
+          ],
+          "properties": {
+            "id": {
+              "$id": "#/properties/run/properties/project/properties/id",
+              "type": "string",
+              "title": "The Id Schema",
+              "default": "",
+              "examples": [
+                "PROJ00001"
+              ],
+              "pattern": "^PROJ[0-9]{5}$"
+            }
+          }
+        }
+      }
+    },
+    "method": {
+      "$id": "#/properties/method",
+      "type": "object",
+      "title": "The Method Schema",
+      "required": [
+        "instrument"
+      ],
+      "properties": {
+        "instrument": {
+          "$id": "#/properties/method/properties/instrument",
+          "type": "object",
+          "title": "The Instrument Schema",
+          "required": [
+            "id"
+          ],
+          "properties": {
+            "id": {
+              "$id": "#/properties/method/properties/instrument/properties/id",
+              "type": "string",
+              "title": "The Id Schema",
+              "default": "",
+              "examples": [
+                "BWM000001"
+              ],
+              "pattern": "^BMW[0-9]{6}$"
+            }
+          }
+        }
+      }
+    },
+    "timestamp": {
+      "$id": "#/properties/timestamp",
+      "type": "string",
+      "title": "The Timestamp Schema",
+      "default": "",
+      "examples": [
+        "2018-09-28T13:10:49+01:00"
+      ],
+      "format": "date-time",
+      "faker": "dateISO.recent"
+    },
+    "system": {
+      "$id": "#/properties/system",
+      "type": "object",
+      "title": "The System Schema",
+      "required": [
+        "id",
+        "serial_number",
+        "vendor",
+        "model",
+        "manufacture_date",
+        "location",
+        "firmware",
+        "owner",
+        "balance"
+      ],
+      "properties": {
+        "id": {
+          "$id": "#/properties/system/properties/id",
+          "type": "string",
+          "title": "The Id Schema",
+          "default": "",
+          "examples": [
+            "BAL001"
+          ],
+          "pattern": "^BAL[0-9]{3}$"
+        },
+        "serial_number": {
+          "$id": "#/properties/system/properties/serial_number",
+          "type": "string",
+          "title": "The Serial_number Schema",
+          "default": "",
+          "examples": [
+            "ABC112049854"
+          ],
+          "pattern": "^ABC[0-9]{9}$"
+        },
+        "vendor": {
+          "$id": "#/properties/system/properties/vendor",
+          "type": "string",
+          "title": "The Vendor Schema",
+          "default": "",
+          "examples": [
+            "mettler toledo"
+          ],
+          "faker": "company.companyName"
+        },
+        "model": {
+          "$id": "#/properties/system/properties/model",
+          "type": "string",
+          "title": "The Model Schema",
+          "default": "",
+          "examples": [
+            "XSR104"
+          ],
+          "pattern": "^[A-Z]{3}[0-9]{3}$"
+        },
+        "manufacture_date": {
+          "$id": "#/properties/system/properties/manufacture_date",
+          "type": "string",
+          "title": "The Manufacture_date Schema",
+          "default": "",
+          "examples": [
+            "2005-04-15T21:09:49+01:00"
+          ],
+          "format": "date-time",
+          "faker": "dateISO.past"
+        },
+        "location": {
+          "$id": "#/properties/system/properties/location",
+          "type": "object",
+          "title": "The Location Schema",
+          "required": [
+            "site",
+            "building",
+            "floor",
+            "room"
+          ],
+          "properties": {
+            "site": {
+              "$id": "#/properties/system/properties/location/properties/site",
+              "type": "string",
+              "title": "The Site Schema",
+              "default": "",
+              "examples": [
+                "STV"
+              ],
+              "pattern": "^[A-Z]{3}$"
+            },
+            "building": {
+              "$id": "#/properties/system/properties/location/properties/building",
+              "type": "integer",
+              "title": "The Building Schema",
+              "default": 0,
+              "examples": [
+                2
+              ],
+              "maximum": 20,
+              "minimum": 1
+            },
+            "floor": {
+              "$id": "#/properties/system/properties/location/properties/floor",
+              "type": "string",
+              "title": "The Floor Schema",
+              "examples": [
+                "F"
+              ],
+              "enum": [
+                "F", "G", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"
+              ]
+            },
+            "room": {
+              "$id": "#/properties/system/properties/location/properties/room",
+              "type": "string",
+              "title": "The Room Schema",
+              "default": "",
+              "examples": [
+                "103"
+              ],
+              "pattern": "^[0-9]{3}$"
+            }
+          }
+        },
+        "firmware": {
+          "$id": "#/properties/system/properties/firmware",
+          "type": "object",
+          "title": "The Firmware Schema",
+          "required": [
+            "version"
+          ],
+          "properties": {
+            "version": {
+              "$id": "#/properties/system/properties/firmware/properties/version",
+              "type": "string",
+              "title": "The Version Schema",
+              "default": "",
+              "examples": [
+                "1.3.5"
+              ],
+              "pattern": "^[0-9]\\.[0-9]\\.[0-9]$"
+            }
+          }
+        },
+        "owner": {
+          "$id": "#/properties/system/properties/owner",
+          "type": "object",
+          "title": "The Owner Schema",
+          "required": [
+            "id"
+          ],
+          "properties": {
+            "id": {
+              "$id": "#/properties/system/properties/owner/properties/id",
+              "type": "string",
+              "title": "The Id Schema",
+              "default": "",
+              "examples": [
+                "jxd00001"
+              ],
+              "pattern": "^jxd[0-5]{5}$"
+            }
+          }
+        },
+        "balance": {
+          "$id": "#/properties/system/properties/balance",
+          "type": "object",
+          "title": "The Balance Schema",
+          "required": [
+            "precision",
+            "accuracy"
+          ],
+          "properties": {
+            "precision": {
+              "$id": "#/properties/system/properties/balance/properties/precision",
+              "type": "object",
+              "title": "The Precision Schema",
+              "required": [
+                "value",
+                "unit"
+              ],
+              "properties": {
+                "value": {
+                  "$id": "#/properties/system/properties/balance/properties/precision/properties/value",
+                  "type": "number",
+                  "title": "The Value Schema",
+                  "default": 0.0,
+                  "examples": [
+                    0.7
+                  ],
+                  "chance": {
+                    "floating": {
+                      "min": 0.1,
+                      "max": 1,
+                      "fixed": 2
+                    }
+                  }
+                },
+                "unit": {
+                  "$id": "#/properties/system/properties/balance/properties/precision/properties/unit",
+                  "title": "The Unit Schema",
+                  "examples": [
+                    "Milligram"
+                  ],
+                  "enum": [
+                    "Milligram"
+                  ]
+                }
+              }
+            },
+            "accuracy": {
+              "$id": "#/properties/system/properties/balance/properties/accuracy",
+              "type": "object",
+              "title": "The Accuracy Schema",
+              "required": [
+                "value",
+                "unit"
+              ],
+              "properties": {
+                "value": {
+                  "$id": "#/properties/system/properties/balance/properties/accuracy/properties/value",
+                  "type": "number",
+                  "title": "The Value Schema",
+                  "default": 0.0,
+                  "examples": [
+                    0.1
+                  ],
+                  "chance": {
+                    "floating": {
+                      "min": 0.1,
+                      "max": 1,
+                      "fixed": 2
+                    }
+                  }
+                },
+                "unit": {
+                  "$id": "#/properties/system/properties/balance/properties/accuracy/properties/unit",
+                  "title": "The Unit Schema",
+                  "examples": [
+                    "Milligram"
+                  ],
+                  "enum": [
+                    "Milligram"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "result": {
+      "$id": "#/properties/result",
+      "type": "object",
+      "title": "The Result Schema",
+      "required": [
+        "net_weight",
+        "gross_deviation",
+        "gross_weight",
+        "net_deviation",
+        "tare_weight",
+        "tare_deviation"
+      ],
+      "properties": {
+        "net_weight": {
+          "$id": "#/properties/result/properties/net_weight",
+          "type": "object",
+          "title": "The Net_weight Schema",
+          "required": [
+            "value",
+            "unit"
+          ],
+          "properties": {
+            "value": {
+              "$id": "#/properties/result/properties/net_weight/properties/value",
+              "type": "number",
+              "title": "The Value Schema",
+              "default": 0.0,
+              "examples": [
+                9.11
+              ],
+              "chance": {
+                "floating": {
+                  "min": 0.1,
+                  "max": 100,
+                  "fixed": 2
+                }
+              }
+            },
+            "unit": {
+              "$id": "#/properties/result/properties/net_weight/properties/unit",
+              "title": "The Unit Schema",
+              "examples": [
+                "Milligram"
+              ],
+              "enum": [
+                "Milligram"
+              ]
+            }
+          }
+        },
+        "gross_deviation": {
+          "$id": "#/properties/result/properties/gross_deviation",
+          "type": "object",
+          "title": "The Gross_deviation Schema",
+          "required": [
+            "value",
+            "unit"
+          ],
+          "properties": {
+            "value": {
+              "$id": "#/properties/result/properties/gross_deviation/properties/value",
+              "type": "number",
+              "title": "The Value Schema",
+              "default": 0.0,
+              "examples": [
+                0.05
+              ],
+              "chance": {
+                "floating": {
+                  "min": 0.1,
+                  "max": 100,
+                  "fixed": 2
+                }
+              }
+            },
+            "unit": {
+              "$id": "#/properties/result/properties/gross_deviation/properties/unit",
+              "title": "The Unit Schema",
+              "examples": [
+                "Milligram"
+              ],
+              "enum": [
+                "Milligram"
+              ]
+            }
+          }
+        },
+        "gross_weight": {
+          "$id": "#/properties/result/properties/gross_weight",
+          "type": "object",
+          "title": "The Gross_weight Schema",
+          "required": [
+            "value",
+            "unit"
+          ],
+          "properties": {
+            "value": {
+              "$id": "#/properties/result/properties/gross_weight/properties/value",
+              "type": "number",
+              "title": "The Value Schema",
+              "default": 0.0,
+              "examples": [
+                60.73
+              ],
+              "chance": {
+                "floating": {
+                  "min": 0.1,
+                  "max": 100,
+                  "fixed": 2
+                }
+              }
+            },
+            "unit": {
+              "$id": "#/properties/result/properties/gross_weight/properties/unit",
+              "title": "The Unit Schema",
+              "examples": [
+                "Milligram"
+              ],
+              "enum": [
+                "Milligram"
+              ]
+            }
+          }
+        },
+        "net_deviation": {
+          "$id": "#/properties/result/properties/net_deviation",
+          "type": "object",
+          "title": "The Net_deviation Schema",
+          "required": [
+            "value",
+            "unit"
+          ],
+          "properties": {
+            "value": {
+              "$id": "#/properties/result/properties/net_deviation/properties/value",
+              "type": "number",
+              "title": "The Value Schema",
+              "default": 0.0,
+              "examples": [
+                0.05
+              ],
+              "chance": {
+                "floating": {
+                  "min": 0.1,
+                  "max": 100,
+                  "fixed": 2
+                }
+              }
+            },
+            "unit": {
+              "$id": "#/properties/result/properties/net_deviation/properties/unit",
+              "title": "The Unit Schema",
+              "examples": [
+                "Milligram"
+              ],
+              "enum": [
+                "Milligram"
+              ]
+            }
+          }
+        },
+        "tare_weight": {
+          "$id": "#/properties/result/properties/tare_weight",
+          "type": "object",
+          "title": "The Tare_weight Schema",
+          "required": [
+            "value",
+            "unit"
+          ],
+          "properties": {
+            "value": {
+              "$id": "#/properties/result/properties/tare_weight/properties/value",
+              "type": "number",
+              "title": "The Value Schema",
+              "default": 0.0,
+              "examples": [
+                51.62
+              ],
+              "chance": {
+                "floating": {
+                  "min": 0.1,
+                  "max": 100,
+                  "fixed": 2
+                }
+              }
+            },
+            "unit": {
+              "$id": "#/properties/result/properties/tare_weight/properties/unit",
+              "title": "The Unit Schema",
+              "examples": [
+                "Milligram"
+              ],
+              "enum": [
+                "Milligram"
+              ]
+            }
+          }
+        },
+        "tare_deviation": {
+          "$id": "#/properties/result/properties/tare_deviation",
+          "type": "object",
+          "title": "The Tare_deviation Schema",
+          "required": [
+            "value",
+            "unit"
+          ],
+          "properties": {
+            "value": {
+              "$id": "#/properties/result/properties/tare_deviation/properties/value",
+              "type": "number",
+              "title": "The Value Schema",
+              "default": 0.0,
+              "examples": [
+                0.05
+              ],
+              "chance": {
+                "floating": {
+                  "min": 0.1,
+                  "max": 100,
+                  "fixed": 2
+                }
+              }
+            },
+            "unit": {
+              "$id": "#/properties/result/properties/tare_deviation/properties/unit",
+              "title": "The Unit Schema",
+              "examples": [
+                "Milligram"
+              ],
+              "enum": [
+                "Milligram"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "calibration": {
+      "$id": "#/properties/calibration",
+      "type": "object",
+      "title": "The Calibration Schema",
+      "required": [
+        "passed",
+        "expiry_date",
+        "precision",
+        "accuracy",
+        "range"
+      ],
+      "properties": {
+        "passed": {
+          "$id": "#/properties/calibration/properties/passed",
+          "type": "boolean",
+          "title": "The Passed Schema",
+          "default": true,
+          "examples": [
+            true
+          ]
+        },
+        "expiry_date": {
+          "$id": "#/properties/calibration/properties/expiry_date",
+          "type": "string",
+          "title": "The Expiry_date Schema",
+          "default": "",
+          "examples": [
+            "2019-10-12T16:09:49+01:00"
+          ],
+          "format": "date-time",
+          "faker": "dateISO.future"
+        },
+        "precision": {
+          "$id": "#/properties/calibration/properties/precision",
+          "type": "object",
+          "title": "The Precision Schema",
+          "required": [
+            "value",
+            "unit"
+          ],
+          "properties": {
+            "value": {
+              "$id": "#/properties/calibration/properties/precision/properties/value",
+              "type": "number",
+              "title": "The Value Schema",
+              "default": 0.0,
+              "examples": [
+                0.1
+              ],
+              "chance": {
+                "floating": {
+                  "min": 0.1,
+                  "max": 1,
+                  "fixed": 2
+                }
+              }
+            },
+            "unit": {
+              "$id": "#/properties/calibration/properties/precision/properties/unit",
+              "title": "The Unit Schema",
+              "examples": [
+                "Milligram"
+              ],
+              "enum": [
+                "Milligram"
+              ]
+            }
+          }
+        },
+        "accuracy": {
+          "$id": "#/properties/calibration/properties/accuracy",
+          "type": "object",
+          "title": "The Accuracy Schema",
+          "required": [
+            "value",
+            "unit"
+          ],
+          "properties": {
+            "value": {
+              "$id": "#/properties/calibration/properties/accuracy/properties/value",
+              "type": "number",
+              "title": "The Value Schema",
+              "default": 0.0,
+              "examples": [
+                0.2
+              ],
+              "chance": {
+                "floating": {
+                  "min": 0.1,
+                  "max": 1,
+                  "fixed": 2
+                }
+              }
+            },
+            "unit": {
+              "$id": "#/properties/calibration/properties/accuracy/properties/unit",
+              "title": "The Unit Schema",
+              "examples": [
+                "Milligram"
+              ],
+              "enum": [
+                "Milligram"
+              ]
+            }
+          }
+        },
+        "range": {
+          "$id": "#/properties/calibration/properties/range",
+          "type": "object",
+          "title": "The Range Schema",
+          "required": [
+            "min",
+            "max"
+          ],
+          "properties": {
+            "min": {
+              "$id": "#/properties/calibration/properties/range/properties/min",
+              "type": "object",
+              "title": "The Min Schema",
+              "required": [
+                "value",
+                "unit"
+              ],
+              "properties": {
+                "value": {
+                  "$id": "#/properties/calibration/properties/range/properties/min/properties/value",
+                  "type": "integer",
+                  "title": "The Value Schema",
+                  "default": 0,
+                  "examples": [
+                    82
+                  ],
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "unit": {
+                  "$id": "#/properties/calibration/properties/range/properties/min/properties/unit",
+                  "title": "The Unit Schema",
+                  "examples": [
+                    "Milligram"
+                  ],
+                  "enum": [
+                    "Milligram"
+                  ]
+                }
+              }
+            },
+            "max": {
+              "$id": "#/properties/calibration/properties/range/properties/max",
+              "type": "object",
+              "title": "The Max Schema",
+              "required": [
+                "value",
+                "unit"
+              ],
+              "properties": {
+                "value": {
+                  "$id": "#/properties/calibration/properties/range/properties/max/properties/value",
+                  "type": "integer",
+                  "title": "The Value Schema",
+                  "default": 0,
+                  "examples": [
+                    1000000
+                  ],
+                  "minimum": 100,
+                  "maximum": 1000000
+                },
+                "unit": {
+                  "$id": "#/properties/calibration/properties/range/properties/max/properties/unit",
+                  "title": "The Unit Schema",
+                  "examples": [
+                    "Milligram"
+                  ],
+                  "enum": [
+                    "Milligram"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "qualification": {
+      "$id": "#/properties/qualification",
+      "type": "object",
+      "title": "The Qualification Schema",
+      "required": [
+        "passed",
+        "performance",
+        "operational",
+        "installation"
+      ],
+      "properties": {
+        "passed": {
+          "$id": "#/properties/qualification/properties/passed",
+          "type": "boolean",
+          "title": "The Passed Schema",
+          "default": true,
+          "examples": [
+            true
+          ]
+        },
+        "performance": {
+          "$id": "#/properties/qualification/properties/performance",
+          "type": "string",
+          "title": "The Performance Schema",
+          "default": "",
+          "examples": [
+            "PQ000001"
+          ],
+          "pattern": "^PQ[0-9]{5}$"
+        },
+        "operational": {
+          "$id": "#/properties/qualification/properties/operational",
+          "type": "string",
+          "title": "The Operational Schema",
+          "default": "",
+          "examples": [
+            "OQ000001"
+          ],
+          "pattern": "^OQ[0-5]{5}$"
+        },
+        "installation": {
+          "$id": "#/properties/qualification/properties/installation",
+          "type": "string",
+          "title": "The Installation Schema",
+          "default": "",
+          "examples": [
+            "IQ000001"
+          ],
+          "pattern": "^IQ[0-9]{6}$"
+        }
+      }
+    }
+  }
+}
