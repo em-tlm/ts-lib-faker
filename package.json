@@ -1,6 +1,6 @@
 {
-  "name": "ts-faker",
-  "version": "1.1.2",
+  "name": "ts-lib-faker",
+  "version": "1.1.4",
   "description": "fake time series data",
   "main": "index.js",
   "directories": {
@@ -12,12 +12,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tetrascience/ts-faker.git"
+    "url": "git+https://github.com/tetrascience/ts-lib-faker.git"
   },
   "author": "Spin Wang",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/tetrascience/ts-faker/issues"
+    "url": "https://github.com/tetrascience/ts-lib-faker/issues"
   },
   "keyworkds": [
     "time series data",
@@ -27,7 +27,7 @@
     "telemetry",
     "Internet of things"
   ],
-  "homepage": "https://github.com/tetrascience/ts-faker#readme",
+  "homepage": "https://github.com/tetrascience/ts-lib-faker#readme",
   "dependencies": {
     "ajv": "^6.5.3",
     "chai": "^3.5.0",
